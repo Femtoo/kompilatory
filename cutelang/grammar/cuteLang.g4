@@ -25,11 +25,16 @@ expr3:  expr4			#single3
 ;
 
 expr4:   INT			    #int
-       | FLOAT			    #real
+       | FLOAT			    #float
+       | arrayExpr          #array
        | TOINT expr4		#toint
-       | TOFLOAT expr4		#toreal
+       | TOFLOAT expr4		#tofloat
        | '(' expr0 ')'		#par
 ;
+
+arrayExpr:  '[' INT (',' INT)* ']'      #intarray
+          | '[' FLOAT (',' FLOAT)* ']'  #floatarray
+    ;
 
 TOINT: '(int)'
     ;
