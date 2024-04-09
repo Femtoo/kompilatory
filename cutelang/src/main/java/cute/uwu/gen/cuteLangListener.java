@@ -65,6 +65,18 @@ public interface cuteLangListener extends ParseTreeListener {
 	 */
 	void exitSingle0(cuteLangParser.Single0Context ctx);
 	/**
+	 * Enter a parse tree produced by the {@code string}
+	 * labeled alternative in {@link cuteLangParser#expr0}.
+	 * @param ctx the parse tree
+	 */
+	void enterString(cuteLangParser.StringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code string}
+	 * labeled alternative in {@link cuteLangParser#expr0}.
+	 * @param ctx the parse tree
+	 */
+	void exitString(cuteLangParser.StringContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code add}
 	 * labeled alternative in {@link cuteLangParser#expr0}.
 	 * @param ctx the parse tree
@@ -76,6 +88,18 @@ public interface cuteLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitAdd(cuteLangParser.AddContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code boolexpr}
+	 * labeled alternative in {@link cuteLangParser#expr0}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolexpr(cuteLangParser.BoolexprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code boolexpr}
+	 * labeled alternative in {@link cuteLangParser#expr0}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolexpr(cuteLangParser.BoolexprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code single1}
 	 * labeled alternative in {@link cuteLangParser#expr1}.
@@ -220,6 +244,126 @@ public interface cuteLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPar(cuteLangParser.ParContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code singlebool0}
+	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
+	 * @param ctx the parse tree
+	 */
+	void enterSinglebool0(cuteLangParser.Singlebool0Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code singlebool0}
+	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
+	 * @param ctx the parse tree
+	 */
+	void exitSinglebool0(cuteLangParser.Singlebool0Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code and}
+	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
+	 * @param ctx the parse tree
+	 */
+	void enterAnd(cuteLangParser.AndContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code and}
+	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
+	 * @param ctx the parse tree
+	 */
+	void exitAnd(cuteLangParser.AndContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code singlebool1}
+	 * labeled alternative in {@link cuteLangParser#boolExpr1}.
+	 * @param ctx the parse tree
+	 */
+	void enterSinglebool1(cuteLangParser.Singlebool1Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code singlebool1}
+	 * labeled alternative in {@link cuteLangParser#boolExpr1}.
+	 * @param ctx the parse tree
+	 */
+	void exitSinglebool1(cuteLangParser.Singlebool1Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code or}
+	 * labeled alternative in {@link cuteLangParser#boolExpr1}.
+	 * @param ctx the parse tree
+	 */
+	void enterOr(cuteLangParser.OrContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code or}
+	 * labeled alternative in {@link cuteLangParser#boolExpr1}.
+	 * @param ctx the parse tree
+	 */
+	void exitOr(cuteLangParser.OrContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code singlebool2}
+	 * labeled alternative in {@link cuteLangParser#boolExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterSinglebool2(cuteLangParser.Singlebool2Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code singlebool2}
+	 * labeled alternative in {@link cuteLangParser#boolExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitSinglebool2(cuteLangParser.Singlebool2Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code xor}
+	 * labeled alternative in {@link cuteLangParser#boolExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void enterXor(cuteLangParser.XorContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code xor}
+	 * labeled alternative in {@link cuteLangParser#boolExpr2}.
+	 * @param ctx the parse tree
+	 */
+	void exitXor(cuteLangParser.XorContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code singlebool3}
+	 * labeled alternative in {@link cuteLangParser#boolExpr3}.
+	 * @param ctx the parse tree
+	 */
+	void enterSinglebool3(cuteLangParser.Singlebool3Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code singlebool3}
+	 * labeled alternative in {@link cuteLangParser#boolExpr3}.
+	 * @param ctx the parse tree
+	 */
+	void exitSinglebool3(cuteLangParser.Singlebool3Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code neg}
+	 * labeled alternative in {@link cuteLangParser#boolExpr3}.
+	 * @param ctx the parse tree
+	 */
+	void enterNeg(cuteLangParser.NegContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code neg}
+	 * labeled alternative in {@link cuteLangParser#boolExpr3}.
+	 * @param ctx the parse tree
+	 */
+	void exitNeg(cuteLangParser.NegContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bool}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 */
+	void enterBool(cuteLangParser.BoolContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bool}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 */
+	void exitBool(cuteLangParser.BoolContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code boolpar}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 */
+	void enterBoolpar(cuteLangParser.BoolparContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code boolpar}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 */
+	void exitBoolpar(cuteLangParser.BoolparContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code intarray}
 	 * labeled alternative in {@link cuteLangParser#arrayExpr}.

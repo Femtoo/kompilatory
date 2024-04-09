@@ -44,12 +44,26 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSingle0(cuteLangParser.Single0Context ctx);
 	/**
+	 * Visit a parse tree produced by the {@code string}
+	 * labeled alternative in {@link cuteLangParser#expr0}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitString(cuteLangParser.StringContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code add}
 	 * labeled alternative in {@link cuteLangParser#expr0}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitAdd(cuteLangParser.AddContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code boolexpr}
+	 * labeled alternative in {@link cuteLangParser#expr0}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolexpr(cuteLangParser.BoolexprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code single1}
 	 * labeled alternative in {@link cuteLangParser#expr1}.
@@ -134,6 +148,76 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitPar(cuteLangParser.ParContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code singlebool0}
+	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSinglebool0(cuteLangParser.Singlebool0Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code and}
+	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAnd(cuteLangParser.AndContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code singlebool1}
+	 * labeled alternative in {@link cuteLangParser#boolExpr1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSinglebool1(cuteLangParser.Singlebool1Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code or}
+	 * labeled alternative in {@link cuteLangParser#boolExpr1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitOr(cuteLangParser.OrContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code singlebool2}
+	 * labeled alternative in {@link cuteLangParser#boolExpr2}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSinglebool2(cuteLangParser.Singlebool2Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code xor}
+	 * labeled alternative in {@link cuteLangParser#boolExpr2}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitXor(cuteLangParser.XorContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code singlebool3}
+	 * labeled alternative in {@link cuteLangParser#boolExpr3}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSinglebool3(cuteLangParser.Singlebool3Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code neg}
+	 * labeled alternative in {@link cuteLangParser#boolExpr3}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNeg(cuteLangParser.NegContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code bool}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBool(cuteLangParser.BoolContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code boolpar}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolpar(cuteLangParser.BoolparContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code intarray}
 	 * labeled alternative in {@link cuteLangParser#arrayExpr}.

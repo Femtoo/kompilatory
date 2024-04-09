@@ -9,7 +9,9 @@ operation:	WRITE ID		#write
         ;
 
 expr0:  expr1			#single0
+      | STRING          #string
       | expr1 ADD expr1	#add
+      | boolExpr0       #boolexpr
 ;
 
 expr1:  expr2			    #single1
@@ -30,6 +32,26 @@ expr4:   INT			    #int
        | TOINT expr4		#toint
        | TOFLOAT expr4		#tofloat
        | '(' expr0 ')'		#par
+;
+
+boolExpr0: boolExpr1                #singlebool0
+         | boolExpr1 AND boolExpr1  #and
+;
+
+boolExpr1: boolExpr2                #singlebool1
+         | boolExpr2 OR boolExpr2   #or
+;
+
+boolExpr2: boolExpr3                #singlebool2
+         | boolExpr3 XOR boolExpr3  #xor
+;
+
+boolExpr3: boolExpr4                #singlebool3
+         | NEG boolExpr4            #neg
+;
+
+boolExpr4: BOOL                 #bool
+         | '(' boolExpr0 ')'    #boolpar
 ;
 
 arrayExpr:  '[' INT (',' INT)* ']'      #intarray
@@ -59,6 +81,9 @@ INT:   '0'..'9'+
 FLOAT:  '0'..'9'+ '.' '0'..'9'+
     ;
 
+BOOL: 'true'|'false'
+    ;
+
 ADD: '+'
     ;
 
@@ -70,6 +95,11 @@ DIV: '/'
 
 SUB: '-'
     ;
+
+AND : '&&';
+OR : '||';
+XOR : '^';
+NEG : '!';
 
 NEWLINE:	'\r'? '\n'
     ;
