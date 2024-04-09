@@ -3,7 +3,7 @@ import java.util.HashMap;
 import java.util.Stack;
 import cute.uwu.gen.*;
 
-enum VarType{ INT, REAL, UNKNOWN }
+enum VarType{ INT, Float, UNKNOWN }
 
 class Value{ 
 	public String name;
@@ -28,14 +28,14 @@ public class LLVMActions extends cuteLangBaseListener {
          LLVMGenerator.declare_i32(ID);
          LLVMGenerator.assign_i32(ID, v.name);
        } 
-       if( v.type == VarType.REAL ){
+       if( v.type == VarType.Float ){
          LLVMGenerator.declare_double(ID);
          LLVMGenerator.assign_double(ID, v.name);
        } 
     }
 
     @Override 
-    public void exitProg(cuteLangParser.ProgContext ctx) { 
+    public void exitProgram(cuteLangParser.ProgramContext ctx) { 
        System.out.println( LLVMGenerator.generate() );
     }
 
@@ -45,8 +45,8 @@ public class LLVMActions extends cuteLangBaseListener {
     } 
 
     @Override 
-    public void exitReal(cuteLangParser.RealContext ctx) { 
-         stack.push( new Value(ctx.REAL().getText(), VarType.REAL) );       
+    public void exitFloat(cuteLangParser.FloatContext ctx) { 
+         stack.push( new Value(ctx.FLOAT().getText(), VarType.Float) );       
     } 
 
     @Override 
@@ -58,9 +58,9 @@ public class LLVMActions extends cuteLangBaseListener {
              LLVMGenerator.add_i32(v1.name, v2.name); 
              stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) ); 
           }
-	  if( v1.type == VarType.REAL ){
+	  if( v1.type == VarType.Float ){
              LLVMGenerator.add_double(v1.name, v2.name); 
-             stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) ); 
+             stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.Float) ); 
          }
        } else {
           error(ctx.getStart().getLine(), "add type mismatch");
@@ -76,9 +76,9 @@ public class LLVMActions extends cuteLangBaseListener {
              LLVMGenerator.mult_i32(v1.name, v2.name); 
              stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.INT) ); 
           }
-	  if( v1.type == VarType.REAL ){
+	  if( v1.type == VarType.Float ){
              LLVMGenerator.mult_double(v1.name, v2.name); 
-             stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) ); 
+             stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.Float) ); 
          }
        } else {
           error(ctx.getStart().getLine(), "mult type mismatch");
@@ -93,22 +93,22 @@ public class LLVMActions extends cuteLangBaseListener {
     }
 
     @Override 
-    public void exitToreal(cuteLangParser.TorealContext ctx) { 
+    public void exitTofloat(cuteLangParser.TofloatContext ctx) { 
        Value v = stack.pop();
        LLVMGenerator.sitofp( v.name );
-       stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.REAL) ); 
+       stack.push( new Value("%"+(LLVMGenerator.reg-1), VarType.Float) ); 
     }
 
     @Override
-    public void exitPrint(cuteLangParser.PrintContext ctx) {
+    public void exitWrite(cuteLangParser.WriteContext ctx) {
        String ID = ctx.ID().getText();
        VarType type = variables.get(ID);
        if( type != null ) {
           if( type == VarType.INT ){
-            LLVMGenerator.printf_i32( ID );
+            LLVMGenerator.writef_i32( ID );
           }
-          if( type == VarType.REAL ){
-            LLVMGenerator.printf_double( ID );
+          if( type == VarType.Float ){
+            LLVMGenerator.writef_double( ID );
           }
        } else {
           error(ctx.getStart().getLine(), "unknown variable "+ID);
