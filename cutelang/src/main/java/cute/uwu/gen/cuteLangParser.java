@@ -17,9 +17,9 @@ public class cuteLangParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, TOINT=7, TOFLOAT=8, WRITE=9, 
-		READ=10, STRING=11, ID=12, INT=13, FLOAT=14, BOOL=15, ADD=16, MULT=17, 
-		DIV=18, SUB=19, AND=20, OR=21, XOR=22, NEG=23, NEWLINE=24, WS=25, START=26, 
-		END=27;
+		READ=10, STRING=11, ID=12, INT=13, FLOAT=14, TRUE=15, FALSE=16, ADD=17, 
+		MULT=18, DIV=19, SUB=20, AND=21, OR=22, XOR=23, NEG=24, NEWLINE=25, WS=26, 
+		START=27, END=28;
 	public static final int
 		RULE_program = 0, RULE_operation = 1, RULE_expr0 = 2, RULE_expr1 = 3, 
 		RULE_expr2 = 4, RULE_expr3 = 5, RULE_expr4 = 6, RULE_boolExpr0 = 7, RULE_boolExpr1 = 8, 
@@ -35,16 +35,17 @@ public class cuteLangParser extends Parser {
 	private static String[] makeLiteralNames() {
 		return new String[] {
 			null, "'='", "'('", "')'", "'['", "','", "']'", "'(int)'", "'(float)'", 
-			"'write'", "'read'", null, null, null, null, null, "'+'", "'*'", "'/'", 
-			"'-'", "'&&'", "'||'", "'^'", "'!'", null, null, "':D'", "':C'"
+			"'write'", "'read'", null, null, null, null, "'true'", "'false'", "'+'", 
+			"'*'", "'/'", "'-'", "'&&'", "'||'", "'^'", "'!'", null, null, "':D'", 
+			"':C'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, "TOINT", "TOFLOAT", "WRITE", 
-			"READ", "STRING", "ID", "INT", "FLOAT", "BOOL", "ADD", "MULT", "DIV", 
-			"SUB", "AND", "OR", "XOR", "NEG", "NEWLINE", "WS", "START", "END"
+			"READ", "STRING", "ID", "INT", "FLOAT", "TRUE", "FALSE", "ADD", "MULT", 
+			"DIV", "SUB", "AND", "OR", "XOR", "NEG", "NEWLINE", "WS", "START", "END"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -143,7 +144,7 @@ public class cuteLangParser extends Parser {
 			setState(33);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 16782848L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 33560064L) != 0)) {
 				{
 				{
 				setState(28);
@@ -1309,7 +1310,8 @@ public class cuteLangParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__1:
-			case BOOL:
+			case TRUE:
+			case FALSE:
 				_localctx = new Singlebool3Context(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
@@ -1355,20 +1357,38 @@ public class cuteLangParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class BoolContext extends BoolExpr4Context {
-		public TerminalNode BOOL() { return getToken(cuteLangParser.BOOL, 0); }
-		public BoolContext(BoolExpr4Context ctx) { copyFrom(ctx); }
+	public static class TrueContext extends BoolExpr4Context {
+		public TerminalNode TRUE() { return getToken(cuteLangParser.TRUE, 0); }
+		public TrueContext(BoolExpr4Context ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).enterBool(this);
+			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).enterTrue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).exitBool(this);
+			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).exitTrue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof cuteLangVisitor) return ((cuteLangVisitor<? extends T>)visitor).visitBool(this);
+			if ( visitor instanceof cuteLangVisitor) return ((cuteLangVisitor<? extends T>)visitor).visitTrue(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class FalseContext extends BoolExpr4Context {
+		public TerminalNode FALSE() { return getToken(cuteLangParser.FALSE, 0); }
+		public FalseContext(BoolExpr4Context ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).enterFalse(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).exitFalse(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof cuteLangVisitor) return ((cuteLangVisitor<? extends T>)visitor).visitFalse(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -1397,26 +1417,34 @@ public class cuteLangParser extends Parser {
 		BoolExpr4Context _localctx = new BoolExpr4Context(_ctx, getState());
 		enterRule(_localctx, 22, RULE_boolExpr4);
 		try {
-			setState(121);
+			setState(122);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
-			case BOOL:
-				_localctx = new BoolContext(_localctx);
+			case TRUE:
+				_localctx = new TrueContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(116);
-				match(BOOL);
+				match(TRUE);
+				}
+				break;
+			case FALSE:
+				_localctx = new FalseContext(_localctx);
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(117);
+				match(FALSE);
 				}
 				break;
 			case T__1:
 				_localctx = new BoolparContext(_localctx);
-				enterOuterAlt(_localctx, 2);
+				enterOuterAlt(_localctx, 3);
 				{
-				setState(117);
-				match(T__1);
 				setState(118);
-				boolExpr0();
+				match(T__1);
 				setState(119);
+				boolExpr0();
+				setState(120);
 				match(T__2);
 				}
 				break;
@@ -1495,34 +1523,34 @@ public class cuteLangParser extends Parser {
 		enterRule(_localctx, 24, RULE_arrayExpr);
 		int _la;
 		try {
-			setState(143);
+			setState(144);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,15,_ctx) ) {
 			case 1:
 				_localctx = new IntarrayContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(123);
-				match(T__3);
 				setState(124);
+				match(T__3);
+				setState(125);
 				match(INT);
-				setState(129);
+				setState(130);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__4) {
 					{
 					{
-					setState(125);
-					match(T__4);
 					setState(126);
+					match(T__4);
+					setState(127);
 					match(INT);
 					}
 					}
-					setState(131);
+					setState(132);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(132);
+				setState(133);
 				match(T__5);
 				}
 				break;
@@ -1530,27 +1558,27 @@ public class cuteLangParser extends Parser {
 				_localctx = new FloatarrayContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(133);
-				match(T__3);
 				setState(134);
+				match(T__3);
+				setState(135);
 				match(FLOAT);
-				setState(139);
+				setState(140);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 				while (_la==T__4) {
 					{
 					{
-					setState(135);
-					match(T__4);
 					setState(136);
+					match(T__4);
+					setState(137);
 					match(FLOAT);
 					}
 					}
-					setState(141);
+					setState(142);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 				}
-				setState(142);
+				setState(143);
 				match(T__5);
 				}
 				break;
@@ -1568,7 +1596,7 @@ public class cuteLangParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u001b\u0092\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
+		"\u0004\u0001\u001c\u0093\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001"+
 		"\u0002\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004"+
 		"\u0002\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007"+
 		"\u0002\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b"+
@@ -1586,38 +1614,38 @@ public class cuteLangParser extends Parser {
 		"\u0007\u0001\u0007\u0001\u0007\u0001\u0007\u0003\u0007`\b\u0007\u0001"+
 		"\b\u0001\b\u0001\b\u0001\b\u0001\b\u0003\bg\b\b\u0001\t\u0001\t\u0001"+
 		"\t\u0001\t\u0001\t\u0003\tn\b\t\u0001\n\u0001\n\u0001\n\u0003\ns\b\n\u0001"+
-		"\u000b\u0001\u000b\u0001\u000b\u0001\u000b\u0001\u000b\u0003\u000bz\b"+
-		"\u000b\u0001\f\u0001\f\u0001\f\u0001\f\u0005\f\u0080\b\f\n\f\f\f\u0083"+
-		"\t\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0005\f\u008a\b\f\n\f\f\f"+
-		"\u008d\t\f\u0001\f\u0003\f\u0090\b\f\u0001\f\u0000\u0000\r\u0000\u0002"+
-		"\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u0000\u0000\u009b"+
-		"\u0000\u001a\u0001\u0000\u0000\u0000\u0002-\u0001\u0000\u0000\u0000\u0004"+
-		"6\u0001\u0000\u0000\u0000\u0006=\u0001\u0000\u0000\u0000\bD\u0001\u0000"+
-		"\u0000\u0000\nK\u0001\u0000\u0000\u0000\fX\u0001\u0000\u0000\u0000\u000e"+
-		"_\u0001\u0000\u0000\u0000\u0010f\u0001\u0000\u0000\u0000\u0012m\u0001"+
-		"\u0000\u0000\u0000\u0014r\u0001\u0000\u0000\u0000\u0016y\u0001\u0000\u0000"+
-		"\u0000\u0018\u008f\u0001\u0000\u0000\u0000\u001a!\u0005\u001a\u0000\u0000"+
-		"\u001b\u001d\u0003\u0002\u0001\u0000\u001c\u001b\u0001\u0000\u0000\u0000"+
-		"\u001c\u001d\u0001\u0000\u0000\u0000\u001d\u001e\u0001\u0000\u0000\u0000"+
-		"\u001e \u0005\u0018\u0000\u0000\u001f\u001c\u0001\u0000\u0000\u0000 #"+
-		"\u0001\u0000\u0000\u0000!\u001f\u0001\u0000\u0000\u0000!\"\u0001\u0000"+
+		"\u000b\u0001\u000b\u0001\u000b\u0001\u000b\u0001\u000b\u0001\u000b\u0003"+
+		"\u000b{\b\u000b\u0001\f\u0001\f\u0001\f\u0001\f\u0005\f\u0081\b\f\n\f"+
+		"\f\f\u0084\t\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0005\f\u008b\b"+
+		"\f\n\f\f\f\u008e\t\f\u0001\f\u0003\f\u0091\b\f\u0001\f\u0000\u0000\r\u0000"+
+		"\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u0000\u0000"+
+		"\u009d\u0000\u001a\u0001\u0000\u0000\u0000\u0002-\u0001\u0000\u0000\u0000"+
+		"\u00046\u0001\u0000\u0000\u0000\u0006=\u0001\u0000\u0000\u0000\bD\u0001"+
+		"\u0000\u0000\u0000\nK\u0001\u0000\u0000\u0000\fX\u0001\u0000\u0000\u0000"+
+		"\u000e_\u0001\u0000\u0000\u0000\u0010f\u0001\u0000\u0000\u0000\u0012m"+
+		"\u0001\u0000\u0000\u0000\u0014r\u0001\u0000\u0000\u0000\u0016z\u0001\u0000"+
+		"\u0000\u0000\u0018\u0090\u0001\u0000\u0000\u0000\u001a!\u0005\u001b\u0000"+
+		"\u0000\u001b\u001d\u0003\u0002\u0001\u0000\u001c\u001b\u0001\u0000\u0000"+
+		"\u0000\u001c\u001d\u0001\u0000\u0000\u0000\u001d\u001e\u0001\u0000\u0000"+
+		"\u0000\u001e \u0005\u0019\u0000\u0000\u001f\u001c\u0001\u0000\u0000\u0000"+
+		" #\u0001\u0000\u0000\u0000!\u001f\u0001\u0000\u0000\u0000!\"\u0001\u0000"+
 		"\u0000\u0000\"$\u0001\u0000\u0000\u0000#!\u0001\u0000\u0000\u0000$%\u0005"+
-		"\u001b\u0000\u0000%\u0001\u0001\u0000\u0000\u0000&\'\u0005\t\u0000\u0000"+
+		"\u001c\u0000\u0000%\u0001\u0001\u0000\u0000\u0000&\'\u0005\t\u0000\u0000"+
 		"\'.\u0005\f\u0000\u0000()\u0005\f\u0000\u0000)*\u0005\u0001\u0000\u0000"+
 		"*.\u0003\u0004\u0002\u0000+,\u0005\n\u0000\u0000,.\u0005\f\u0000\u0000"+
 		"-&\u0001\u0000\u0000\u0000-(\u0001\u0000\u0000\u0000-+\u0001\u0000\u0000"+
 		"\u0000.\u0003\u0001\u0000\u0000\u0000/7\u0003\u0006\u0003\u000007\u0005"+
-		"\u000b\u0000\u000012\u0003\u0006\u0003\u000023\u0005\u0010\u0000\u0000"+
+		"\u000b\u0000\u000012\u0003\u0006\u0003\u000023\u0005\u0011\u0000\u0000"+
 		"34\u0003\u0006\u0003\u000047\u0001\u0000\u0000\u000057\u0003\u000e\u0007"+
 		"\u00006/\u0001\u0000\u0000\u000060\u0001\u0000\u0000\u000061\u0001\u0000"+
 		"\u0000\u000065\u0001\u0000\u0000\u00007\u0005\u0001\u0000\u0000\u0000"+
-		"8>\u0003\b\u0004\u00009:\u0003\b\u0004\u0000:;\u0005\u0011\u0000\u0000"+
+		"8>\u0003\b\u0004\u00009:\u0003\b\u0004\u0000:;\u0005\u0012\u0000\u0000"+
 		";<\u0003\b\u0004\u0000<>\u0001\u0000\u0000\u0000=8\u0001\u0000\u0000\u0000"+
 		"=9\u0001\u0000\u0000\u0000>\u0007\u0001\u0000\u0000\u0000?E\u0003\n\u0005"+
-		"\u0000@A\u0003\n\u0005\u0000AB\u0005\u0013\u0000\u0000BC\u0003\n\u0005"+
+		"\u0000@A\u0003\n\u0005\u0000AB\u0005\u0014\u0000\u0000BC\u0003\n\u0005"+
 		"\u0000CE\u0001\u0000\u0000\u0000D?\u0001\u0000\u0000\u0000D@\u0001\u0000"+
 		"\u0000\u0000E\t\u0001\u0000\u0000\u0000FL\u0003\f\u0006\u0000GH\u0003"+
-		"\f\u0006\u0000HI\u0005\u0012\u0000\u0000IJ\u0003\f\u0006\u0000JL\u0001"+
+		"\f\u0006\u0000HI\u0005\u0013\u0000\u0000IJ\u0003\f\u0006\u0000JL\u0001"+
 		"\u0000\u0000\u0000KF\u0001\u0000\u0000\u0000KG\u0001\u0000\u0000\u0000"+
 		"L\u000b\u0001\u0000\u0000\u0000MY\u0005\r\u0000\u0000NY\u0005\u000e\u0000"+
 		"\u0000OY\u0003\u0018\f\u0000PQ\u0005\u0007\u0000\u0000QY\u0003\f\u0006"+
@@ -1626,32 +1654,33 @@ public class cuteLangParser extends Parser {
 		"\u0000\u0000XM\u0001\u0000\u0000\u0000XN\u0001\u0000\u0000\u0000XO\u0001"+
 		"\u0000\u0000\u0000XP\u0001\u0000\u0000\u0000XR\u0001\u0000\u0000\u0000"+
 		"XT\u0001\u0000\u0000\u0000Y\r\u0001\u0000\u0000\u0000Z`\u0003\u0010\b"+
-		"\u0000[\\\u0003\u0010\b\u0000\\]\u0005\u0014\u0000\u0000]^\u0003\u0010"+
+		"\u0000[\\\u0003\u0010\b\u0000\\]\u0005\u0015\u0000\u0000]^\u0003\u0010"+
 		"\b\u0000^`\u0001\u0000\u0000\u0000_Z\u0001\u0000\u0000\u0000_[\u0001\u0000"+
 		"\u0000\u0000`\u000f\u0001\u0000\u0000\u0000ag\u0003\u0012\t\u0000bc\u0003"+
-		"\u0012\t\u0000cd\u0005\u0015\u0000\u0000de\u0003\u0012\t\u0000eg\u0001"+
+		"\u0012\t\u0000cd\u0005\u0016\u0000\u0000de\u0003\u0012\t\u0000eg\u0001"+
 		"\u0000\u0000\u0000fa\u0001\u0000\u0000\u0000fb\u0001\u0000\u0000\u0000"+
 		"g\u0011\u0001\u0000\u0000\u0000hn\u0003\u0014\n\u0000ij\u0003\u0014\n"+
-		"\u0000jk\u0005\u0016\u0000\u0000kl\u0003\u0014\n\u0000ln\u0001\u0000\u0000"+
+		"\u0000jk\u0005\u0017\u0000\u0000kl\u0003\u0014\n\u0000ln\u0001\u0000\u0000"+
 		"\u0000mh\u0001\u0000\u0000\u0000mi\u0001\u0000\u0000\u0000n\u0013\u0001"+
-		"\u0000\u0000\u0000os\u0003\u0016\u000b\u0000pq\u0005\u0017\u0000\u0000"+
+		"\u0000\u0000\u0000os\u0003\u0016\u000b\u0000pq\u0005\u0018\u0000\u0000"+
 		"qs\u0003\u0016\u000b\u0000ro\u0001\u0000\u0000\u0000rp\u0001\u0000\u0000"+
-		"\u0000s\u0015\u0001\u0000\u0000\u0000tz\u0005\u000f\u0000\u0000uv\u0005"+
-		"\u0002\u0000\u0000vw\u0003\u000e\u0007\u0000wx\u0005\u0003\u0000\u0000"+
-		"xz\u0001\u0000\u0000\u0000yt\u0001\u0000\u0000\u0000yu\u0001\u0000\u0000"+
-		"\u0000z\u0017\u0001\u0000\u0000\u0000{|\u0005\u0004\u0000\u0000|\u0081"+
-		"\u0005\r\u0000\u0000}~\u0005\u0005\u0000\u0000~\u0080\u0005\r\u0000\u0000"+
-		"\u007f}\u0001\u0000\u0000\u0000\u0080\u0083\u0001\u0000\u0000\u0000\u0081"+
-		"\u007f\u0001\u0000\u0000\u0000\u0081\u0082\u0001\u0000\u0000\u0000\u0082"+
-		"\u0084\u0001\u0000\u0000\u0000\u0083\u0081\u0001\u0000\u0000\u0000\u0084"+
-		"\u0090\u0005\u0006\u0000\u0000\u0085\u0086\u0005\u0004\u0000\u0000\u0086"+
-		"\u008b\u0005\u000e\u0000\u0000\u0087\u0088\u0005\u0005\u0000\u0000\u0088"+
-		"\u008a\u0005\u000e\u0000\u0000\u0089\u0087\u0001\u0000\u0000\u0000\u008a"+
-		"\u008d\u0001\u0000\u0000\u0000\u008b\u0089\u0001\u0000\u0000\u0000\u008b"+
-		"\u008c\u0001\u0000\u0000\u0000\u008c\u008e\u0001\u0000\u0000\u0000\u008d"+
-		"\u008b\u0001\u0000\u0000\u0000\u008e\u0090\u0005\u0006\u0000\u0000\u008f"+
-		"{\u0001\u0000\u0000\u0000\u008f\u0085\u0001\u0000\u0000\u0000\u0090\u0019"+
-		"\u0001\u0000\u0000\u0000\u0010\u001c!-6=DKX_fmry\u0081\u008b\u008f";
+		"\u0000s\u0015\u0001\u0000\u0000\u0000t{\u0005\u000f\u0000\u0000u{\u0005"+
+		"\u0010\u0000\u0000vw\u0005\u0002\u0000\u0000wx\u0003\u000e\u0007\u0000"+
+		"xy\u0005\u0003\u0000\u0000y{\u0001\u0000\u0000\u0000zt\u0001\u0000\u0000"+
+		"\u0000zu\u0001\u0000\u0000\u0000zv\u0001\u0000\u0000\u0000{\u0017\u0001"+
+		"\u0000\u0000\u0000|}\u0005\u0004\u0000\u0000}\u0082\u0005\r\u0000\u0000"+
+		"~\u007f\u0005\u0005\u0000\u0000\u007f\u0081\u0005\r\u0000\u0000\u0080"+
+		"~\u0001\u0000\u0000\u0000\u0081\u0084\u0001\u0000\u0000\u0000\u0082\u0080"+
+		"\u0001\u0000\u0000\u0000\u0082\u0083\u0001\u0000\u0000\u0000\u0083\u0085"+
+		"\u0001\u0000\u0000\u0000\u0084\u0082\u0001\u0000\u0000\u0000\u0085\u0091"+
+		"\u0005\u0006\u0000\u0000\u0086\u0087\u0005\u0004\u0000\u0000\u0087\u008c"+
+		"\u0005\u000e\u0000\u0000\u0088\u0089\u0005\u0005\u0000\u0000\u0089\u008b"+
+		"\u0005\u000e\u0000\u0000\u008a\u0088\u0001\u0000\u0000\u0000\u008b\u008e"+
+		"\u0001\u0000\u0000\u0000\u008c\u008a\u0001\u0000\u0000\u0000\u008c\u008d"+
+		"\u0001\u0000\u0000\u0000\u008d\u008f\u0001\u0000\u0000\u0000\u008e\u008c"+
+		"\u0001\u0000\u0000\u0000\u008f\u0091\u0005\u0006\u0000\u0000\u0090|\u0001"+
+		"\u0000\u0000\u0000\u0090\u0086\u0001\u0000\u0000\u0000\u0091\u0019\u0001"+
+		"\u0000\u0000\u0000\u0010\u001c!-6=DKX_fmrz\u0082\u008c\u0090";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

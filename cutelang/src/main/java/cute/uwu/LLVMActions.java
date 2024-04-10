@@ -1,11 +1,13 @@
 package cute.uwu;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Stack;
 
 import cute.uwu.gen.*;
 
-enum VarType {INT, FLOAT, STRING, BOOL, UNKNOWN}
+enum VarType {INT, FLOAT, STRING, TRUE, FALSE, UNKNOWN}
 
 class Value {
     public String name;
@@ -40,7 +42,7 @@ public class LLVMActions extends cuteLangBaseListener {
             if (v.type == VarType.FLOAT) {
                 LLVMGenerator.declare_double(ID);
             }
-            if (v.type == VarType.BOOL) {
+            if (v.type == VarType.TRUE || v.type == VarType.FALSE) {
                 LLVMGenerator.declare_bool(ID);
             }
             if (v.type == VarType.STRING) {
@@ -53,8 +55,11 @@ public class LLVMActions extends cuteLangBaseListener {
         if (v.type == VarType.FLOAT) {
             LLVMGenerator.assign_double(ID, v.name);
         }
-        if (v.type == VarType.BOOL) {
-            LLVMGenerator.assign_bool(ID, v.name);
+        if (v.type == VarType.TRUE) {
+            LLVMGenerator.assign_bool(ID, "1");
+        }
+        if (v.type == VarType.FALSE) {
+            LLVMGenerator.assign_bool(ID, "0");
         }
         if (v.type == VarType.STRING) {
             LLVMGenerator.assign_string(ID);
@@ -63,7 +68,16 @@ public class LLVMActions extends cuteLangBaseListener {
 
     @Override
     public void exitProgram(cuteLangParser.ProgramContext ctx) {
-        System.out.println(LLVMGenerator.generate());
+        String output = LLVMGenerator.generate();
+        System.out.println(output);
+
+        try {
+            FileWriter writer = new FileWriter("D:\\Studia\\sem8\\kompilatory\\projekt\\test.ll");
+            writer.write(output);
+            writer.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -77,8 +91,13 @@ public class LLVMActions extends cuteLangBaseListener {
     }
 
     @Override
-    public void exitBool(cuteLangParser.BoolContext ctx) {
-        stack.push(new Value(ctx.BOOL().getText(), VarType.BOOL, 0));
+    public void exitTrue(cuteLangParser.TrueContext ctx) {
+        stack.push(new Value(ctx.TRUE().getText(), VarType.TRUE, 0));
+    }
+
+    @Override
+    public void exitFalse(cuteLangParser.FalseContext ctx) {
+        stack.push(new Value(ctx.FALSE().getText(), VarType.FALSE, 0));
     }
 
     @Override
@@ -162,7 +181,7 @@ public class LLVMActions extends cuteLangBaseListener {
         }
     }
 
-    @Override
+    /*@Override
     public void exitAnd(cuteLangParser.AndContext ctx) {
         Value v1 = stack.pop();
         Value v2 = stack.pop();
@@ -207,7 +226,7 @@ public class LLVMActions extends cuteLangBaseListener {
         } else {
             error(ctx.getStart().getLine(), "neg type mismatch");
         }
-    }
+    }*/
 
     @Override
     public void exitToint(cuteLangParser.TointContext ctx) {
@@ -235,8 +254,14 @@ public class LLVMActions extends cuteLangBaseListener {
                 if (v.type == VarType.FLOAT) {
                     LLVMGenerator.writef_double(ID);
                 }
-                if (v.type == VarType.STRING) {
-                    LLVMGenerator.writef_string(ID);
+//                if (v.type == VarType.STRING) {
+//                    LLVMGenerator.writef_string(ID);
+//                }
+                if (v.type == VarType.TRUE) {
+                    LLVMGenerator.writef_bool(ID);
+                }
+                if (v.type == VarType.FALSE) {
+                    LLVMGenerator.writef_bool(ID);
                 }
             }
         } else {
@@ -249,7 +274,7 @@ public class LLVMActions extends cuteLangBaseListener {
         String ID = ctx.ID().getText();
         Value v = new Value(ID, VarType.STRING, BUFFER_SIZE - 1);
         variables.put(ID, v);
-        LLVMGenerator.scanf(ID, BUFFER_SIZE);
+        LLVMGenerator.scanf(ID/*, BUFFER_SIZE*/);
     }
 
     void error(int line, String msg) {

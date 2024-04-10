@@ -205,12 +205,19 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNeg(cuteLangParser.NegContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code bool}
+	 * Visit a parse tree produced by the {@code true}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBool(cuteLangParser.BoolContext ctx);
+	T visitTrue(cuteLangParser.TrueContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code false}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFalse(cuteLangParser.FalseContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code boolpar}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.

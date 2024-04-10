@@ -352,13 +352,25 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterBool(cuteLangParser.BoolContext ctx) { }
+	@Override public void enterTrue(cuteLangParser.TrueContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitBool(cuteLangParser.BoolContext ctx) { }
+	@Override public void exitTrue(cuteLangParser.TrueContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFalse(cuteLangParser.FalseContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFalse(cuteLangParser.FalseContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

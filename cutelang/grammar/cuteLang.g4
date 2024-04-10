@@ -50,7 +50,8 @@ boolExpr3: boolExpr4                #singlebool3
          | NEG boolExpr4            #neg
 ;
 
-boolExpr4: BOOL                 #bool
+boolExpr4: TRUE                 #true
+         | FALSE                #false
          | '(' boolExpr0 ')'    #boolpar
 ;
 
@@ -81,7 +82,10 @@ INT:   '0'..'9'+
 FLOAT:  '0'..'9'+ '.' '0'..'9'+
     ;
 
-BOOL: 'true'|'false'
+TRUE: 'true'
+    ;
+
+FALSE: 'false'
     ;
 
 ADD: '+'

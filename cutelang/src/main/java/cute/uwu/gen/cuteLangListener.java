@@ -341,17 +341,29 @@ public interface cuteLangListener extends ParseTreeListener {
 	 */
 	void exitNeg(cuteLangParser.NegContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code bool}
+	 * Enter a parse tree produced by the {@code true}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
 	 * @param ctx the parse tree
 	 */
-	void enterBool(cuteLangParser.BoolContext ctx);
+	void enterTrue(cuteLangParser.TrueContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code bool}
+	 * Exit a parse tree produced by the {@code true}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
 	 * @param ctx the parse tree
 	 */
-	void exitBool(cuteLangParser.BoolContext ctx);
+	void exitTrue(cuteLangParser.TrueContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code false}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 */
+	void enterFalse(cuteLangParser.FalseContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code false}
+	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
+	 * @param ctx the parse tree
+	 */
+	void exitFalse(cuteLangParser.FalseContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code boolpar}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
