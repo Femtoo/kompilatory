@@ -362,24 +362,6 @@ public class cuteLangParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class StringContext extends Expr0Context {
-		public TerminalNode STRING() { return getToken(cuteLangParser.STRING, 0); }
-		public StringContext(Expr0Context ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).enterString(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).exitString(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof cuteLangVisitor) return ((cuteLangVisitor<? extends T>)visitor).visitString(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class BoolexprContext extends Expr0Context {
 		public BoolExpr0Context boolExpr0() {
 			return getRuleContext(BoolExpr0Context.class,0);
@@ -404,7 +386,7 @@ public class cuteLangParser extends Parser {
 		Expr0Context _localctx = new Expr0Context(_ctx, getState());
 		enterRule(_localctx, 4, RULE_expr0);
 		try {
-			setState(54);
+			setState(53);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
@@ -416,30 +398,22 @@ public class cuteLangParser extends Parser {
 				}
 				break;
 			case 2:
-				_localctx = new StringContext(_localctx);
+				_localctx = new AddContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(48);
-				match(STRING);
+				expr1();
+				setState(49);
+				match(ADD);
+				setState(50);
+				expr1();
 				}
 				break;
 			case 3:
-				_localctx = new AddContext(_localctx);
+				_localctx = new BoolexprContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(49);
-				expr1();
-				setState(50);
-				match(ADD);
-				setState(51);
-				expr1();
-				}
-				break;
-			case 4:
-				_localctx = new BoolexprContext(_localctx);
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(53);
+				setState(52);
 				boolExpr0();
 				}
 				break;
@@ -512,6 +486,24 @@ public class cuteLangParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	@SuppressWarnings("CheckReturnValue")
+	public static class StringContext extends Expr1Context {
+		public TerminalNode STRING() { return getToken(cuteLangParser.STRING, 0); }
+		public StringContext(Expr1Context ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).enterString(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof cuteLangListener ) ((cuteLangListener)listener).exitString(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof cuteLangVisitor) return ((cuteLangVisitor<? extends T>)visitor).visitString(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 
 	public final Expr1Context expr1() throws RecognitionException {
 		Expr1Context _localctx = new Expr1Context(_ctx, getState());
@@ -524,13 +516,21 @@ public class cuteLangParser extends Parser {
 				_localctx = new Single1Context(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(56);
+				setState(55);
 				expr2();
 				}
 				break;
 			case 2:
-				_localctx = new MultContext(_localctx);
+				_localctx = new StringContext(_localctx);
 				enterOuterAlt(_localctx, 2);
+				{
+				setState(56);
+				match(STRING);
+				}
+				break;
+			case 3:
+				_localctx = new MultContext(_localctx);
+				enterOuterAlt(_localctx, 3);
 				{
 				setState(57);
 				expr2();
@@ -1629,8 +1629,8 @@ public class cuteLangParser extends Parser {
 		"\u0000\u0005\u0000 \b\u0000\n\u0000\f\u0000#\t\u0000\u0001\u0000\u0001"+
 		"\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
 		"\u0001\u0001\u0001\u0003\u0001.\b\u0001\u0001\u0002\u0001\u0002\u0001"+
-		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0003\u00027\b"+
-		"\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0003"+
+		"\u0002\u0001\u0002\u0001\u0002\u0001\u0002\u0003\u00026\b\u0002\u0001"+
+		"\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0003\u0003"+
 		"\u0003>\b\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0001"+
 		"\u0004\u0003\u0004E\b\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001"+
 		"\u0005\u0001\u0005\u0003\u0005L\b\u0005\u0001\u0006\u0001\u0006\u0001"+
@@ -1645,7 +1645,7 @@ public class cuteLangParser extends Parser {
 		"\u008c\b\f\n\f\f\f\u008f\t\f\u0001\f\u0003\f\u0092\b\f\u0001\f\u0000\u0000"+
 		"\r\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012\u0014\u0016\u0018\u0000"+
 		"\u0000\u009f\u0000\u001a\u0001\u0000\u0000\u0000\u0002-\u0001\u0000\u0000"+
-		"\u0000\u00046\u0001\u0000\u0000\u0000\u0006=\u0001\u0000\u0000\u0000\b"+
+		"\u0000\u00045\u0001\u0000\u0000\u0000\u0006=\u0001\u0000\u0000\u0000\b"+
 		"D\u0001\u0000\u0000\u0000\nK\u0001\u0000\u0000\u0000\fY\u0001\u0000\u0000"+
 		"\u0000\u000e`\u0001\u0000\u0000\u0000\u0010g\u0001\u0000\u0000\u0000\u0012"+
 		"n\u0001\u0000\u0000\u0000\u0014s\u0001\u0000\u0000\u0000\u0016{\u0001"+
@@ -1659,13 +1659,13 @@ public class cuteLangParser extends Parser {
 		"\u0000\'.\u0005\r\u0000\u0000()\u0005\r\u0000\u0000)*\u0005\u0001\u0000"+
 		"\u0000*.\u0003\u0004\u0002\u0000+,\u0005\n\u0000\u0000,.\u0005\r\u0000"+
 		"\u0000-&\u0001\u0000\u0000\u0000-(\u0001\u0000\u0000\u0000-+\u0001\u0000"+
-		"\u0000\u0000.\u0003\u0001\u0000\u0000\u0000/7\u0003\u0006\u0003\u0000"+
-		"07\u0005\u000b\u0000\u000012\u0003\u0006\u0003\u000023\u0005\u0010\u0000"+
-		"\u000034\u0003\u0006\u0003\u000047\u0001\u0000\u0000\u000057\u0003\u000e"+
-		"\u0007\u00006/\u0001\u0000\u0000\u000060\u0001\u0000\u0000\u000061\u0001"+
-		"\u0000\u0000\u000065\u0001\u0000\u0000\u00007\u0005\u0001\u0000\u0000"+
-		"\u00008>\u0003\b\u0004\u00009:\u0003\b\u0004\u0000:;\u0005\u0011\u0000"+
-		"\u0000;<\u0003\b\u0004\u0000<>\u0001\u0000\u0000\u0000=8\u0001\u0000\u0000"+
+		"\u0000\u0000.\u0003\u0001\u0000\u0000\u0000/6\u0003\u0006\u0003\u0000"+
+		"01\u0003\u0006\u0003\u000012\u0005\u0010\u0000\u000023\u0003\u0006\u0003"+
+		"\u000036\u0001\u0000\u0000\u000046\u0003\u000e\u0007\u00005/\u0001\u0000"+
+		"\u0000\u000050\u0001\u0000\u0000\u000054\u0001\u0000\u0000\u00006\u0005"+
+		"\u0001\u0000\u0000\u00007>\u0003\b\u0004\u00008>\u0005\u000b\u0000\u0000"+
+		"9:\u0003\b\u0004\u0000:;\u0005\u0011\u0000\u0000;<\u0003\b\u0004\u0000"+
+		"<>\u0001\u0000\u0000\u0000=7\u0001\u0000\u0000\u0000=8\u0001\u0000\u0000"+
 		"\u0000=9\u0001\u0000\u0000\u0000>\u0007\u0001\u0000\u0000\u0000?E\u0003"+
 		"\n\u0005\u0000@A\u0003\n\u0005\u0000AB\u0005\u0013\u0000\u0000BC\u0003"+
 		"\n\u0005\u0000CE\u0001\u0000\u0000\u0000D?\u0001\u0000\u0000\u0000D@\u0001"+
@@ -1706,7 +1706,7 @@ public class cuteLangParser extends Parser {
 		"\u0001\u0000\u0000\u0000\u008e\u0090\u0001\u0000\u0000\u0000\u008f\u008d"+
 		"\u0001\u0000\u0000\u0000\u0090\u0092\u0005\u0006\u0000\u0000\u0091}\u0001"+
 		"\u0000\u0000\u0000\u0091\u0087\u0001\u0000\u0000\u0000\u0092\u0019\u0001"+
-		"\u0000\u0000\u0000\u0010\u001c!-6=DKY`gns{\u0083\u008d\u0091";
+		"\u0000\u0000\u0000\u0010\u001c!-5=DKY`gns{\u0083\u008d\u0091";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

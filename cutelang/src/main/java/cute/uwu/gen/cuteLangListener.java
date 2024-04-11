@@ -65,18 +65,6 @@ public interface cuteLangListener extends ParseTreeListener {
 	 */
 	void exitSingle0(cuteLangParser.Single0Context ctx);
 	/**
-	 * Enter a parse tree produced by the {@code string}
-	 * labeled alternative in {@link cuteLangParser#expr0}.
-	 * @param ctx the parse tree
-	 */
-	void enterString(cuteLangParser.StringContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code string}
-	 * labeled alternative in {@link cuteLangParser#expr0}.
-	 * @param ctx the parse tree
-	 */
-	void exitString(cuteLangParser.StringContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code add}
 	 * labeled alternative in {@link cuteLangParser#expr0}.
 	 * @param ctx the parse tree
@@ -112,6 +100,18 @@ public interface cuteLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitSingle1(cuteLangParser.Single1Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code string}
+	 * labeled alternative in {@link cuteLangParser#expr1}.
+	 * @param ctx the parse tree
+	 */
+	void enterString(cuteLangParser.StringContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code string}
+	 * labeled alternative in {@link cuteLangParser#expr1}.
+	 * @param ctx the parse tree
+	 */
+	void exitString(cuteLangParser.StringContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code mult}
 	 * labeled alternative in {@link cuteLangParser#expr1}.

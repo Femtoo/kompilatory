@@ -9,12 +9,12 @@ operation:	WRITE ID		#write
         ;
 
 expr0:  expr1			#single0
-      | STRING          #string
       | expr1 ADD expr1	#add
       | boolExpr0       #boolexpr
 ;
 
 expr1:  expr2			    #single1
+      | STRING          #string
       | expr2 MULT expr2	#mult
 ;
 

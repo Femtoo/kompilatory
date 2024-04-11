@@ -44,13 +44,6 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitSingle0(cuteLangParser.Single0Context ctx);
 	/**
-	 * Visit a parse tree produced by the {@code string}
-	 * labeled alternative in {@link cuteLangParser#expr0}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitString(cuteLangParser.StringContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code add}
 	 * labeled alternative in {@link cuteLangParser#expr0}.
 	 * @param ctx the parse tree
@@ -71,6 +64,13 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitSingle1(cuteLangParser.Single1Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code string}
+	 * labeled alternative in {@link cuteLangParser#expr1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitString(cuteLangParser.StringContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code mult}
 	 * labeled alternative in {@link cuteLangParser#expr1}.

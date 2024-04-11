@@ -124,6 +124,10 @@ public class LLVMActions extends cuteLangBaseListener {
                 LLVMGenerator.add_double(v1.name, v2.name);
                 stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.FLOAT, 0));
             }
+            if (v1.type == VarType.STRING) {
+                LLVMGenerator.add_string(v1.name, v1.length, v2.name, v2.length);
+                stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.STRING, v1.length+v2.length));
+            }
         } else {
             error(ctx.getStart().getLine(), "add type mismatch");
         }

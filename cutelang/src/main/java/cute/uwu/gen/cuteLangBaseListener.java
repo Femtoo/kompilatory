@@ -76,18 +76,6 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterString(cuteLangParser.StringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitString(cuteLangParser.StringContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterAdd(cuteLangParser.AddContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -119,6 +107,18 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitSingle1(cuteLangParser.Single1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterString(cuteLangParser.StringContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitString(cuteLangParser.StringContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

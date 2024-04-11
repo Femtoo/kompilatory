@@ -207,9 +207,9 @@ class LLVMGenerator{
         main_text += "store i8* %"+(reg-1)+", i8** %ptrstr"+str+"\n";
         main_text += "%"+reg+" = load i8*, i8** %ptrstr"+str+"\n";
         reg++;
-        main_text += "%"+reg+" = call i8* @strcpy(i8* %"+(reg-1)+", i8* "+id1+")\n";
+        main_text += "%"+reg+" = call i8* @strcpy(i8* %"+(reg-1)+", i8* %"+id1+")\n";
         reg++;
-        main_text += "%"+reg+" = call i8* @strcat(i8* %"+(reg-2)+", i8* "+id2+")\n";
+        main_text += "%"+reg+" = call i8* @strcat(i8* %"+(reg-2)+", i8* %"+id2+")\n";
         reg++;
         str++;
     }
