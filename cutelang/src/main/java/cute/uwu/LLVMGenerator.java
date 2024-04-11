@@ -20,7 +20,7 @@ class LLVMGenerator{
        reg++;
     }
 
-    static void writef_string(String id){
+    static void writef_string(String id){ //done
         main_text += "%"+reg+" = load i8*, i8** %"+id+"\n";
         reg++;
         main_text += "%"+reg+" = call i32 (i8*, ...) @printf(i8* getelementptr inbounds ([4 x i8], [4 x i8]* @strps, i32 0, i32 0), i8* %"+(reg-1)+")\n";
@@ -49,7 +49,7 @@ class LLVMGenerator{
     }
 
     static void declare_bool(String id){
-        main_text += "%"+id+" = alloca i1*\n";
+        main_text += "%"+id+" = alloca i1\n";
     }
 
     static void allocate_string(String id, int l){
@@ -69,6 +69,7 @@ class LLVMGenerator{
     }
 
     static void assign_bool(String id, String value) {
+        //String boolVal = value.equals("true") ? "1" : "0";
         main_text += "store i1 " + value + ", i1* %" + id + "\n";
     }
  
@@ -132,22 +133,22 @@ class LLVMGenerator{
         reg++;
     }
 
-    static void and_bool(String val1, String val2){
-        main_text += "%"+reg+" = and "+val1+", "+val2+"\n";
+    static void and_bool(String val1, String val2){ //done
+        main_text += "%"+reg+" = and i1 "+val1+", "+val2+"\n";
         reg++;
     }
 
-    static void or_bool(String val1, String val2){
-        main_text += "%"+reg+" = or "+val1+", "+val2+"\n";
+    static void or_bool(String val1, String val2){ //done
+        main_text += "%"+reg+" = or i1 "+val1+", "+val2+"\n";
         reg++;
     }
 
-    static void xor_bool(String val1, String val2){
-        main_text += "%"+reg+" = xor "+val1+", "+val2+"\n";
+    static void xor_bool(String val1, String val2){ //done
+        main_text += "%"+reg+" = xor i1 "+val1+", "+val2+"\n";
         reg++;
     }
 
-    static void neg_bool(String val){
+    static void neg_bool(String val){ //done
         main_text += "%"+reg+" = xor i1 1, "+val+"\n";
         reg++;
     }
@@ -162,26 +163,24 @@ class LLVMGenerator{
        reg++;
     }
 
-    static void scanf(String id/*, int l*/){
-//        allocate_string("str"+str, l);
-//        main_text += "%"+id+" = alloca i8*\n";
-//        main_text += "%"+reg+" = getelementptr inbounds ["+(l+1)+" x i8], ["+(l+1)+" x i8]* %str"+str+", i64 0, i64 0\n";
-//        reg++;
-//        main_text += "store i8* %"+(reg-1)+", i8** %"+id+"\n";
-//        str++;
-//        main_text += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([5 x i8], [5 x i8]* @strs, i32 0, i32 0), i8* %"+(reg-1)+")\n";
-//        reg++;
-        main_text += "%"+reg+" = call i32 (i8*, ...) @__isoc99_scanf(i8* getelementptr inbounds ([3 x i8], [3 x i8]* @strs, i32 0, i32 0), i32* %"+id+")\n";
+    static void scanf(String id, int l){
+        allocate_string("str"+str, l);
+        main_text += "%"+id+" = alloca i8*\n";
+        main_text += "%"+reg+" = getelementptr inbounds ["+(l+1)+" x i8], ["+(l+1)+" x i8]* %str"+str+", i64 0, i64 0\n";
+        reg++;
+        main_text += "store i8* %"+(reg-1)+", i8** %"+id+"\n";
+        str++;
+        main_text += "%"+reg+" = call i32 (ptr, ...) @scanf(ptr noundef getelementptr inbounds ([3 x i8], [3 x i8]* @strs, i32 0, i32 0), ptr noundef %"+(reg-1)+")\n";
         reg++;
     }
 
-    static void constant_string(String content){
+    static void constant_string(String content){ //done
         int l = content.length()+1;
         header_text += "@str"+str+" = constant ["+l+" x i8] c\""+content+"\\00\"\n";
         String n = "str"+str;
         LLVMGenerator.allocate_string(n, (l-1));
         main_text += "%"+reg+" = bitcast ["+l+" x i8]* %"+n+" to i8*\n";
-        main_text += "call void @llvm.memcpy.p0i8.p0i8.i64(i8* align 1 %"+reg+", i8* align 1 getelementptr inbounds (["+l+" x i8], ["+l+" x i8]* @"+n+", i32 0, i32 0), i64 "+l+", i1 false)\n";
+        main_text += "call void @llvm.memcpy.p0.p0.i64(ptr align 1 %"+reg+", ptr align 1 getelementptr inbounds (["+l+" x i8], ["+l+" x i8]* @"+n+", i32 0, i32 0), i64 "+l+", i1 false)\n";
         reg++;
         main_text += "%ptr"+n+" = alloca i8*\n";
         main_text += "%"+reg+" = getelementptr inbounds ["+l+" x i8], ["+l+" x i8]* %"+n+", i64 0, i64 0\n";
@@ -235,13 +234,21 @@ class LLVMGenerator{
     }
  
  
-    static String generate(){
+    static String generate(){ //done
        String text = "";
        text += "declare i32 @printf(ptr noundef, ...)\n";
-       text += "declare i32 @__isoc99_scanf(i8*, ...)\n";
+       text += "declare i32 @sprintf(i8*, i8*, ...)\n";
+       text += "declare i8* @strcpy(i8*, i8*)\n";
+       text += "declare i8* @strcat(i8*, i8*)\n";
+       text += "declare i32 @atoi(i8*)\n";
+       text += "declare i32 @scanf(ptr noundef, ...)\n";
+       text += "declare void @llvm.memcpy.p0.p0.i64(ptr noalias nocapture writeonly, ptr noalias nocapture readonly, i64, i1 immarg)\n";
        text += "@strpi = constant [4 x i8] c\"%d\\0A\\00\"\n";
        text += "@strpd = constant [4 x i8] c\"%f\\0A\\00\"\n";
-       text += "@strs = constant [3 x i8] c\"%d\\00\"\n";
+       text += "@strps = constant [4 x i8] c\"%s\\0A\\00\"\n";
+       text += "@strs = constant [3 x i8] c\"%s\\00\"\n";
+//       text += "@strs2 = constant [8 x i8] c\"%s[^\\n]\\00\"\n";
+       text += "@strspi = constant [3 x i8] c\"%d\\00\"\n";
        text += header_text;
        text += "define i32 @main() nounwind{\n";
        text += main_text;

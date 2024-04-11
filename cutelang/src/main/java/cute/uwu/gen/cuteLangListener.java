@@ -197,6 +197,18 @@ public interface cuteLangListener extends ParseTreeListener {
 	 */
 	void exitFloat(cuteLangParser.FloatContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code id1}
+	 * labeled alternative in {@link cuteLangParser#expr4}.
+	 * @param ctx the parse tree
+	 */
+	void enterId1(cuteLangParser.Id1Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code id1}
+	 * labeled alternative in {@link cuteLangParser#expr4}.
+	 * @param ctx the parse tree
+	 */
+	void exitId1(cuteLangParser.Id1Context ctx);
+	/**
 	 * Enter a parse tree produced by the {@code array}
 	 * labeled alternative in {@link cuteLangParser#expr4}.
 	 * @param ctx the parse tree
@@ -341,29 +353,29 @@ public interface cuteLangListener extends ParseTreeListener {
 	 */
 	void exitNeg(cuteLangParser.NegContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code true}
+	 * Enter a parse tree produced by the {@code bool}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
 	 * @param ctx the parse tree
 	 */
-	void enterTrue(cuteLangParser.TrueContext ctx);
+	void enterBool(cuteLangParser.BoolContext ctx);
 	/**
-	 * Exit a parse tree produced by the {@code true}
+	 * Exit a parse tree produced by the {@code bool}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
 	 * @param ctx the parse tree
 	 */
-	void exitTrue(cuteLangParser.TrueContext ctx);
+	void exitBool(cuteLangParser.BoolContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code false}
+	 * Enter a parse tree produced by the {@code id2}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
 	 * @param ctx the parse tree
 	 */
-	void enterFalse(cuteLangParser.FalseContext ctx);
+	void enterId2(cuteLangParser.Id2Context ctx);
 	/**
-	 * Exit a parse tree produced by the {@code false}
+	 * Exit a parse tree produced by the {@code id2}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.
 	 * @param ctx the parse tree
 	 */
-	void exitFalse(cuteLangParser.FalseContext ctx);
+	void exitId2(cuteLangParser.Id2Context ctx);
 	/**
 	 * Enter a parse tree produced by the {@code boolpar}
 	 * labeled alternative in {@link cuteLangParser#boolExpr4}.

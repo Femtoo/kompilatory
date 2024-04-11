@@ -7,7 +7,7 @@ import java.util.Stack;
 
 import cute.uwu.gen.*;
 
-enum VarType {INT, FLOAT, STRING, TRUE, FALSE, UNKNOWN}
+enum VarType {INT, FLOAT, STRING, BOOL, UNKNOWN}
 
 class Value {
     public String name;
@@ -42,7 +42,7 @@ public class LLVMActions extends cuteLangBaseListener {
             if (v.type == VarType.FLOAT) {
                 LLVMGenerator.declare_double(ID);
             }
-            if (v.type == VarType.TRUE || v.type == VarType.FALSE) {
+            if (v.type == VarType.BOOL) {
                 LLVMGenerator.declare_bool(ID);
             }
             if (v.type == VarType.STRING) {
@@ -55,11 +55,8 @@ public class LLVMActions extends cuteLangBaseListener {
         if (v.type == VarType.FLOAT) {
             LLVMGenerator.assign_double(ID, v.name);
         }
-        if (v.type == VarType.TRUE) {
-            LLVMGenerator.assign_bool(ID, "1");
-        }
-        if (v.type == VarType.FALSE) {
-            LLVMGenerator.assign_bool(ID, "0");
+        if (v.type == VarType.BOOL) {
+            LLVMGenerator.assign_bool(ID, v.name);
         }
         if (v.type == VarType.STRING) {
             LLVMGenerator.assign_string(ID);
@@ -79,6 +76,15 @@ public class LLVMActions extends cuteLangBaseListener {
             throw new RuntimeException(e);
         }
     }
+    @Override
+    public void exitId1(cuteLangParser.Id1Context ctx) {
+        stack.push(variables.get(ctx.ID().getText()));
+    }
+
+    @Override
+    public void exitId2(cuteLangParser.Id2Context ctx) {
+        stack.push(variables.get(ctx.ID().getText()));
+    }
 
     @Override
     public void exitInt(cuteLangParser.IntContext ctx) {
@@ -91,13 +97,9 @@ public class LLVMActions extends cuteLangBaseListener {
     }
 
     @Override
-    public void exitTrue(cuteLangParser.TrueContext ctx) {
-        stack.push(new Value(ctx.TRUE().getText(), VarType.TRUE, 0));
-    }
-
-    @Override
-    public void exitFalse(cuteLangParser.FalseContext ctx) {
-        stack.push(new Value(ctx.FALSE().getText(), VarType.FALSE, 0));
+    public void exitBool(cuteLangParser.BoolContext ctx) {
+        var tmp = ctx.BOOL().getText().equals("true") ? "1" : "0";
+        stack.push(new Value(tmp, VarType.BOOL, 0));
     }
 
     @Override
@@ -181,7 +183,7 @@ public class LLVMActions extends cuteLangBaseListener {
         }
     }
 
-    /*@Override
+    @Override
     public void exitAnd(cuteLangParser.AndContext ctx) {
         Value v1 = stack.pop();
         Value v2 = stack.pop();
@@ -226,7 +228,7 @@ public class LLVMActions extends cuteLangBaseListener {
         } else {
             error(ctx.getStart().getLine(), "neg type mismatch");
         }
-    }*/
+    }
 
     @Override
     public void exitToint(cuteLangParser.TointContext ctx) {
@@ -254,15 +256,13 @@ public class LLVMActions extends cuteLangBaseListener {
                 if (v.type == VarType.FLOAT) {
                     LLVMGenerator.writef_double(ID);
                 }
-//                if (v.type == VarType.STRING) {
-//                    LLVMGenerator.writef_string(ID);
-//                }
-                if (v.type == VarType.TRUE) {
+                if (v.type == VarType.STRING) {
+                    LLVMGenerator.writef_string(ID);
+                }
+                if (v.type == VarType.BOOL) {
                     LLVMGenerator.writef_bool(ID);
                 }
-                if (v.type == VarType.FALSE) {
-                    LLVMGenerator.writef_bool(ID);
-                }
+
             }
         } else {
             error(ctx.getStart().getLine(), "unknown variable");
@@ -274,7 +274,7 @@ public class LLVMActions extends cuteLangBaseListener {
         String ID = ctx.ID().getText();
         Value v = new Value(ID, VarType.STRING, BUFFER_SIZE - 1);
         variables.put(ID, v);
-        LLVMGenerator.scanf(ID/*, BUFFER_SIZE*/);
+        LLVMGenerator.scanf(ID, BUFFER_SIZE);
     }
 
     void error(int line, String msg) {

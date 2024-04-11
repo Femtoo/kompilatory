@@ -208,6 +208,18 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterId1(cuteLangParser.Id1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitId1(cuteLangParser.Id1Context ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterArray(cuteLangParser.ArrayContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -352,25 +364,25 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterTrue(cuteLangParser.TrueContext ctx) { }
+	@Override public void enterBool(cuteLangParser.BoolContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitTrue(cuteLangParser.TrueContext ctx) { }
+	@Override public void exitBool(cuteLangParser.BoolContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFalse(cuteLangParser.FalseContext ctx) { }
+	@Override public void enterId2(cuteLangParser.Id2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitFalse(cuteLangParser.FalseContext ctx) { }
+	@Override public void exitId2(cuteLangParser.Id2Context ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

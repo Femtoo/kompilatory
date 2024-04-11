@@ -28,6 +28,7 @@ expr3:  expr4			#single3
 
 expr4:   INT			    #int
        | FLOAT			    #float
+       | ID                 #id1
        | arrayExpr          #array
        | TOINT expr4		#toint
        | TOFLOAT expr4		#tofloat
@@ -50,8 +51,8 @@ boolExpr3: boolExpr4                #singlebool3
          | NEG boolExpr4            #neg
 ;
 
-boolExpr4: TRUE                 #true
-         | FALSE                #false
+boolExpr4: BOOL                 #bool
+         | ID                   #id2
          | '(' boolExpr0 ')'    #boolpar
 ;
 
@@ -73,6 +74,10 @@ READ:	'read'
 
 STRING :  '"' ( ~('\\'|'"') )* '"'
     ;
+
+BOOL: 'true' | 'false'
+    ;
+
 ID:   ('a'..'z'|'A'..'Z')+
    ;
 
@@ -80,12 +85,6 @@ INT:   '0'..'9'+
     ;
 
 FLOAT:  '0'..'9'+ '.' '0'..'9'+
-    ;
-
-TRUE: 'true'
-    ;
-
-FALSE: 'false'
     ;
 
 ADD: '+'
