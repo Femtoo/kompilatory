@@ -179,13 +179,15 @@ class LLVMGenerator{
         header_text += "@str"+str+" = constant ["+l+" x i8] c\""+content+"\\00\"\n";
         String n = "str"+str;
         LLVMGenerator.allocate_string(n, (l-1));
-        main_text += "%"+reg+" = bitcast ["+l+" x i8]* %"+n+" to i8*\n";
-        main_text += "call void @llvm.memcpy.p0.p0.i64(ptr align 1 %"+reg+", ptr align 1 getelementptr inbounds (["+l+" x i8], ["+l+" x i8]* @"+n+", i32 0, i32 0), i64 "+l+", i1 false)\n";
-        reg++;
-        main_text += "%ptr"+n+" = alloca i8*\n";
+//        main_text += "%"+reg+" = bitcast ["+l+" x i8]* %"+n+" to i8*\n";
+//        main_text += "call void @llvm.memcpy.p0.p0.i64(ptr %"+reg+", ptr getelementptr inbounds (["+l+" x i8], ["+l+" x i8]* @"+n+", i32 0, i32 0), i64 "+l+", i1 false)\n";
+//        reg++;
+//        main_text += "%ptr"+n+" = alloca i8*\n";
+        main_text += "%ptr"+n+" = bitcast ["+l+" x i8]* %"+n+" to i8*\n";
+        main_text += "call void @llvm.memcpy.p0.p0.i64(ptr %ptr"+n+", ptr getelementptr inbounds (["+l+" x i8], ["+l+" x i8]* @"+n+", i32 0, i32 0), i64 "+l+", i1 false)\n";
         main_text += "%"+reg+" = getelementptr inbounds ["+l+" x i8], ["+l+" x i8]* %"+n+", i64 0, i64 0\n";
         reg++;
-        main_text += "store i8* %"+(reg-1)+", i8** %ptr"+n+"\n";
+//        main_text += "store i8* %"+(reg-1)+", i8** %ptr"+n+"\n";
         str++;
     }
 
@@ -207,9 +209,9 @@ class LLVMGenerator{
         main_text += "store i8* %"+(reg-1)+", i8** %ptrstr"+str+"\n";
         main_text += "%"+reg+" = load i8*, i8** %ptrstr"+str+"\n";
         reg++;
-        main_text += "%"+reg+" = call i8* @strcpy(i8* %"+(reg-1)+", i8* %"+id1+")\n";
+        main_text += "%"+reg+" = call i8* @strcpy(i8* %"+(reg-1)+", i8* %"+id2+")\n";
         reg++;
-        main_text += "%"+reg+" = call i8* @strcat(i8* %"+(reg-2)+", i8* %"+id2+")\n";
+        main_text += "%"+reg+" = call i8* @strcat(i8* %"+(reg-2)+", i8* %"+id1+")\n";
         reg++;
         str++;
     }

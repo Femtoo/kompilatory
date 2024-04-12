@@ -78,12 +78,22 @@ public class LLVMActions extends cuteLangBaseListener {
     }
     @Override
     public void exitId1(cuteLangParser.Id1Context ctx) {
-        stack.push(variables.get(ctx.ID().getText()));
+        String ID = ctx.ID().getText();
+        if (variables.containsKey(ID)) {
+            stack.push(variables.get(ID));
+        } else {
+        error(ctx.getStart().getLine(), "unknown variable");
+        }
     }
 
     @Override
     public void exitId2(cuteLangParser.Id2Context ctx) {
-        stack.push(variables.get(ctx.ID().getText()));
+        String ID = ctx.ID().getText();
+        if (variables.containsKey(ID)) {
+            stack.push(variables.get(ID));
+        } else {
+            error(ctx.getStart().getLine(), "unknown variable");
+        }
     }
 
     @Override
