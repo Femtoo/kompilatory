@@ -29,6 +29,32 @@ public class LLVMActions extends cuteLangBaseListener {
     static int BUFFER_SIZE = 16;
 
     @Override
+    public void exitIf(LangXParser.IfContext ctx) {
+    }
+
+    @Override
+    public void enterBlockif(LangXParser.BlockifContext ctx) {
+        LLVMGenerator.ifstart();
+    }
+
+    @Override
+    public void exitBlockif(LangXParser.BlockifContext ctx) {
+        LLVMGenerator.ifend();
+    }
+
+    @Override
+    public void exitEqual(LangXParser.EqualContext ctx) {
+        String ID = ctx.ID().getText();
+        String INT = ctx.INT().getText();
+        if( variables.contains(ID) ) {
+            LLVMGenerator.icmp( ID, INT );
+        } else {
+            ctx.getStart().getLine();
+            System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
+        }
+    }
+
+    @Override
     public void exitAssign(cuteLangParser.AssignContext ctx) {
 
         String ID = ctx.ID().getText();

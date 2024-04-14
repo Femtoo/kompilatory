@@ -1,12 +1,22 @@
 grammar cuteLang;
 
-program: START ( operation? NEWLINE )* END
+program: START block END
     ;
 
-operation:	WRITE ID		#write
-	    | ID '=' expr0		#assign
-	    | READ ID   		#read
-        ;
+block: ( operation? NEWLINE )*
+;
+
+operation:  IF cond THEN ifblock ENDIF      #if
+            | WRITE ID		                #write
+	        | ID '=' expr0		            #assign
+	        | READ ID   		            #read
+            ;
+
+ifblock: block
+;
+
+cond: ID '==' INT
+;
 
 expr0:  expr1			#single0
       | expr1 ADD expr1	#add
@@ -71,6 +81,15 @@ WRITE:	'write'
 
 READ:	'read'
    ;
+
+IF:	'if'
+;
+
+THEN:	'then'
+;
+
+ENDIF:	'endif'
+;
 
 STRING :  '"' ( ~('\\'|'"') )* '"'
     ;
