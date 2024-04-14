@@ -29,24 +29,25 @@ public class LLVMActions extends cuteLangBaseListener {
     static int BUFFER_SIZE = 16;
 
     @Override
-    public void exitIf(LangXParser.IfContext ctx) {
+    public void exitIf(cuteLangParser.IfContext ctx) {
     }
 
     @Override
-    public void enterBlockif(LangXParser.BlockifContext ctx) {
+    public void enterIfblock(cuteLangParser.IfblockContext ctx) {
         LLVMGenerator.ifstart();
     }
 
     @Override
-    public void exitBlockif(LangXParser.BlockifContext ctx) {
+    public void exitIfblock(cuteLangParser.IfblockContext ctx) {
         LLVMGenerator.ifend();
     }
 
     @Override
-    public void exitEqual(LangXParser.EqualContext ctx) {
+    public void exitCond(cuteLangParser.CondContext ctx) {
         String ID = ctx.ID().getText();
         String INT = ctx.INT().getText();
-        if( variables.contains(ID) ) {
+//        if( variables.contains(ID) ) {
+        if( variables.containsKey(ID) ) {
             LLVMGenerator.icmp( ID, INT );
         } else {
             ctx.getStart().getLine();
@@ -95,7 +96,7 @@ public class LLVMActions extends cuteLangBaseListener {
         System.out.println(output);
 
         try {
-            FileWriter writer = new FileWriter("D:\\Studia\\sem8\\kompilatory\\projekt\\test.ll");
+            FileWriter writer = new FileWriter("C:\\Users\\KT\\kompilatory\\cutelang\\cuteLangFiles\\test.ll");
             writer.write(output);
             writer.close();
         } catch (IOException e) {
