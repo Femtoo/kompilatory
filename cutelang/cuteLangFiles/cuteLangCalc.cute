@@ -1,21 +1,10 @@
 :D
-a = "Hello "
-write a
-b = "World"
-c = a + b
-write b
-write c
-
-
-read str
-write str
-
-x = 5
-y = 10
-z = x+y
-write z
-
-bb = 5.0
-dd = (float)z / bb
-write dd
+b = 0
+a = 4
+repeat 3
+    write b
+    repeat 2
+         write a
+    endrepeat
+endrepeat
 :C

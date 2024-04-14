@@ -6,11 +6,19 @@ program: START block END
 block: ( operation? NEWLINE )*
 ;
 
-operation:  IF cond THEN ifblock ENDIF      #if
-            | WRITE ID		                #write
-	        | ID '=' expr0		            #assign
-	        | READ ID   		            #read
+operation:  REPEAT repetitions block ENDREPEAT		#repeat
+            | IF cond THEN ifblock ENDIF            #if
+            | WRITE ID		                        #write
+	        | ID '=' expr0		                    #assign
+	        | READ ID   		                    #read
             ;
+
+repetitions: repvalue
+;
+
+repvalue: ID    #id3
+	    | INT   #int2
+;
 
 ifblock: block
 ;
@@ -81,6 +89,12 @@ WRITE:	'write'
 
 READ:	'read'
    ;
+
+REPEAT: 'repeat'
+;
+
+ENDREPEAT: 'endrepeat'
+;
 
 IF:	'if'
 ;

@@ -29,6 +29,24 @@ public class LLVMActions extends cuteLangBaseListener {
     static int BUFFER_SIZE = 16;
 
     @Override
+    public void exitRepetitions(cuteLangParser.RepetitionsContext ctx) {
+        var tmp = stack.pop();
+        if(tmp.type == VarType.INT) {
+            LLVMGenerator.repeatstart(tmp.name);
+        }
+        else {
+            System.err.println("Line "+ ctx.getStart().getLine()+", wrong type, should be int");
+        }
+    }
+
+    @Override
+    public void exitBlock(cuteLangParser.BlockContext ctx) {
+        if( ctx.getParent() instanceof cuteLangParser.RepeatContext ){
+            LLVMGenerator.repeatend();
+        }
+    }
+
+    @Override
     public void exitIf(cuteLangParser.IfContext ctx) {
     }
 
@@ -76,6 +94,9 @@ public class LLVMActions extends cuteLangBaseListener {
                 LLVMGenerator.declare_string(ID);
             }
         }
+//        else {
+//            variables.get(ID).name = v.name;
+//        }
         if (v.type == VarType.INT) {
             LLVMGenerator.assign_i32(ID, v.name);
         }
@@ -124,7 +145,22 @@ public class LLVMActions extends cuteLangBaseListener {
     }
 
     @Override
+    public void exitId3(cuteLangParser.Id3Context ctx) {
+        String ID = ctx.ID().getText();
+        if (variables.containsKey(ID)) {
+            stack.push(variables.get(ID));
+        } else {
+            error(ctx.getStart().getLine(), "unknown variable");
+        }
+    }
+
+    @Override
     public void exitInt(cuteLangParser.IntContext ctx) {
+        stack.push(new Value(ctx.INT().getText(), VarType.INT, 0));
+    }
+
+    @Override
+    public void exitInt2(cuteLangParser.Int2Context ctx) {
         stack.push(new Value(ctx.INT().getText(), VarType.INT, 0));
     }
 
