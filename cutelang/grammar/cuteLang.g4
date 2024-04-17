@@ -3,7 +3,7 @@ grammar cuteLang;
 program: START block END
     ;
 
-block: ( operation? NEWLINE )*
+block: ( (operation|function)? NEWLINE )*
 ;
 
 operation:  REPEAT repetitions block ENDREPEAT		#repeat
@@ -78,6 +78,15 @@ arrayExpr:  '[' INT (',' INT)* ']'      #intarray
           | '[' FLOAT (',' FLOAT)* ']'  #floatarray
     ;
 
+function: FUNCTION fparam fblock ENDFUNCTION
+;
+
+fparam: ID
+;
+
+fblock: ( operation? NEWLINE )*
+;
+
 TOINT: '(int)'
     ;
 
@@ -89,6 +98,12 @@ WRITE:	'write'
 
 READ:	'read'
    ;
+
+FUNCTION: 'function'
+;
+
+ENDFUNCTION:	'endfunction'
+;
 
 REPEAT: 'repeat'
 ;

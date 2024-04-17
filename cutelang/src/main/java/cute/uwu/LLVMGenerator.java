@@ -6,11 +6,28 @@ class LLVMGenerator{
    
     static String header_text = "";
     static String main_text = "";
+    static String buffer = "";
     static int reg = 1;
+    static int main_reg = 1;
     static int str = 1;
     static int br = 0;
 
     static Stack<Integer> brstack = new Stack<Integer>();
+
+    static void functionstart(String id){
+        main_text += buffer;
+        main_reg = reg;
+        buffer = "define i32 @"+id+"() nounwind {\n";
+        reg = 1;
+    }
+
+    static void functionend(){
+        buffer += "ret i32 %"+(reg-1)+"\n";
+        buffer += "}\n";
+        header_text += buffer;
+        buffer = "";
+        reg = main_reg;
+    }
 
     static void repeatstart(String repetitions){
         declare_i32(Integer.toString(reg));
