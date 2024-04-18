@@ -201,12 +201,25 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitTofloat(cuteLangParser.TofloatContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code functioncall}
+	 * labeled alternative in {@link cuteLangParser#expr4}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctioncall(cuteLangParser.FunctioncallContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code par}
 	 * labeled alternative in {@link cuteLangParser#expr4}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitPar(cuteLangParser.ParContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#funccall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunccall(cuteLangParser.FunccallContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code singlebool0}
 	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
@@ -304,6 +317,12 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFunction(cuteLangParser.FunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#fname}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFname(cuteLangParser.FnameContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link cuteLangParser#fparam}.
 	 * @param ctx the parse tree

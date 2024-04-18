@@ -50,7 +50,11 @@ expr4:   INT			    #int
        | arrayExpr          #array
        | TOINT expr4		#toint
        | TOFLOAT expr4		#tofloat
+       | funccall   		#functioncall
        | '(' expr0 ')'		#par
+;
+
+funccall: ID '(' (expr4 (',' expr4)*)? ')'
 ;
 
 boolExpr0: boolExpr1                #singlebool0
@@ -78,19 +82,25 @@ arrayExpr:  '[' INT (',' INT)* ']'      #intarray
           | '[' FLOAT (',' FLOAT)* ']'  #floatarray
     ;
 
-function: FUNCTION fparam fblock ENDFUNCTION
+function: FUNCTION fname  '(' fparam '):' fblock NEWLINE ENDFUNCTION
 ;
 
-fparam: ID
+fname: FTYPE ID
 ;
 
-fblock: ( operation? NEWLINE )*
+fparam: (FTYPE ID (',' FTYPE ID)* )?
+;
+
+fblock: ( operation? NEWLINE )* 'return' ID
 ;
 
 TOINT: '(int)'
     ;
 
 TOFLOAT: '(float)'
+    ;
+
+FTYPE: 'int' | 'float' | 'bool'
     ;
 
 WRITE:	'write'

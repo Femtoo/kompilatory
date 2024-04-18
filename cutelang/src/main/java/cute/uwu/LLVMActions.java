@@ -2,11 +2,11 @@ package cute.uwu;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Stack;
+import java.util.*;
 
 import cute.uwu.gen.*;
+
+import static cute.uwu.DataTypeIdentifier.identifyType;
 
 enum VarType {INT, FLOAT, STRING, BOOL, UNKNOWN}
 
@@ -26,9 +26,10 @@ public class LLVMActions extends cuteLangBaseListener {
 
     HashMap<String, Value> variables = new HashMap<String, Value>();
     HashMap<String, Value> localvariables = new HashMap<String, Value>();
-    HashSet<String> functions = new HashSet<String>();
+    HashMap<String,String> functions = new HashMap<String,String>();
     Stack<Value> stack = new Stack<Value>();
     String function;
+    String functionType;
     Boolean global;
 
     static int BUFFER_SIZE = 16;
@@ -39,11 +40,57 @@ public class LLVMActions extends cuteLangBaseListener {
     }
 
     @Override
-    public void exitFparam(cuteLangParser.FparamContext ctx) {
+    public void exitFunccall(cuteLangParser.FunccallContext ctx) {
         String ID = ctx.ID().getText();
-        functions.add(ID);
-        function = ID;
-        LLVMGenerator.functionstart(ID);
+        String funcType = functions.get(ID);
+        List<Value> stackValues = new ArrayList<>();
+        while (!stack.isEmpty()){
+            stackValues.add(stack.pop());
+        }
+
+        LLVMGenerator.func_call(ID, funcType, stackValues);
+        var resultType = funcType.equals("int") ? VarType.INT : (funcType.equals("float") ? VarType.FLOAT : VarType.BOOL);
+        stack.push(new Value("%" + (LLVMGenerator.reg - 1), resultType, 0));
+    }
+
+    @Override
+    public void exitFname(cuteLangParser.FnameContext ctx) {
+        String FTYPE = ctx.FTYPE().getText();
+        String ID = ctx.ID().getText();
+        if(functions.containsKey(ID)){
+            error(ctx.getStart().getLine(), "function with such name already exists");
+        } else {
+            functions.put(ID, FTYPE);
+            functionType = FTYPE;
+            function = ID;
+        }
+    }
+
+    @Override
+    public void exitFparam(cuteLangParser.FparamContext ctx) {
+        StringBuilder argsStr = new StringBuilder();
+        for (int i = 0; i <ctx.ID().size(); i++) {
+            String id = ctx.ID(i).getText();
+            String type = ctx.FTYPE(i).getText();
+            switch (type) {
+                case "int" -> {
+                    argsStr.append("i32 ");
+                    localvariables.put("%" + id, new Value("%" + id, VarType.INT, 0));
+                }
+                case "float" -> {
+                    argsStr.append("double ");
+                    localvariables.put("%" + id, new Value("%" + id, VarType.FLOAT, 0));
+                }
+                case "bool" -> {
+                    argsStr.append("i1 ");
+                    localvariables.put("%" + id, new Value("%" + id, VarType.BOOL, 0));
+                }
+            }
+            argsStr.append("%" + id + ", ");
+        }
+        argsStr.delete(argsStr.length()-2, argsStr.length());
+
+        LLVMGenerator.functionstart(function, functionType, argsStr.toString());
     }
 
     @Override
@@ -53,13 +100,18 @@ public class LLVMActions extends cuteLangBaseListener {
 
     @Override
     public void exitFblock(cuteLangParser.FblockContext ctx) {
+        String retID = ctx.ID().getText();
+        if(!localvariables.containsKey("%" + retID)){
+            error(ctx.getStart().getLine(), "unknown variable in return");
+        }
+        LLVMGenerator.functionend(functionType,"%" + retID);
 //        if( ! localvariables.containsKey(function) ){
 //            LLVMGenerator.assign(set_variable(function), "0");
 //        }
-//        LLVMGenerator.load( "%"+function );
+//        LLVMGenerator.load_i32( "%"+function );
 //        LLVMGenerator.functionend();
-//        localvariables = new HashMap<String, Value>();
-//        global = true;
+        localvariables = new HashMap<String, Value>();
+        global = true;
     }
 
     @Override
@@ -118,7 +170,7 @@ public class LLVMActions extends cuteLangBaseListener {
         Value v = stack.pop();
         String prefix = global ? "@" : "%";
 
-        if (!variables.containsKey(prefix + ID)) {
+        if (!variables.containsKey(prefix + ID) && !localvariables.containsKey(prefix + ID)) {
             if (global) {
                 variables.put(prefix + ID, v);
             } else {
@@ -141,6 +193,19 @@ public class LLVMActions extends cuteLangBaseListener {
 //        else {
 //            variables.get(ID).name = v.name;
 //        }
+
+        Value prevVal;
+        if (global) {
+            prevVal = variables.get(prefix + ID);
+        } else {
+            prevVal = localvariables.get(prefix + ID);
+        }
+
+        if(v.type != prevVal.type){
+            prevVal.type=v.type;
+            prevVal.name=v.name;
+        }
+
         if (v.type == VarType.INT) {
             LLVMGenerator.assign_i32(prefix + ID, v.name);
         }
@@ -177,6 +242,8 @@ public class LLVMActions extends cuteLangBaseListener {
         String ID = prefix + ctx.ID().getText();
         if (variables.containsKey(ID)) {
             stack.push(variables.get(ID));
+        } else if(localvariables.containsKey(ID)) {
+            stack.push(localvariables.get(ID));
         } else {
             error(ctx.getStart().getLine(), "unknown variable");
         }
@@ -188,6 +255,8 @@ public class LLVMActions extends cuteLangBaseListener {
         String ID = prefix + ctx.ID().getText();
         if (variables.containsKey(ID)) {
             stack.push(variables.get(ID));
+        } else if(localvariables.containsKey(ID)) {
+            stack.push(localvariables.get(ID));
         } else {
             error(ctx.getStart().getLine(), "unknown variable");
         }
@@ -199,6 +268,8 @@ public class LLVMActions extends cuteLangBaseListener {
         String ID = prefix + ctx.ID().getText();
         if (variables.containsKey(ID)) {
             stack.push(variables.get(ID));
+        } else if(localvariables.containsKey(ID)) {
+            stack.push(localvariables.get(ID));
         } else {
             error(ctx.getStart().getLine(), "unknown variable");
         }

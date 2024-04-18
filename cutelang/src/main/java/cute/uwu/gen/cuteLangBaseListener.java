@@ -352,6 +352,18 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterFunctioncall(cuteLangParser.FunctioncallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunctioncall(cuteLangParser.FunctioncallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPar(cuteLangParser.ParContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -359,6 +371,18 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitPar(cuteLangParser.ParContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFunccall(cuteLangParser.FunccallContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFunccall(cuteLangParser.FunccallContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -527,6 +551,18 @@ public class cuteLangBaseListener implements cuteLangListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitFunction(cuteLangParser.FunctionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterFname(cuteLangParser.FnameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitFname(cuteLangParser.FnameContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

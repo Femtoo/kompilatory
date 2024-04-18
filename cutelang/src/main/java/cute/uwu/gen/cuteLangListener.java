@@ -333,6 +333,18 @@ public interface cuteLangListener extends ParseTreeListener {
 	 */
 	void exitTofloat(cuteLangParser.TofloatContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code functioncall}
+	 * labeled alternative in {@link cuteLangParser#expr4}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctioncall(cuteLangParser.FunctioncallContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code functioncall}
+	 * labeled alternative in {@link cuteLangParser#expr4}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctioncall(cuteLangParser.FunctioncallContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code par}
 	 * labeled alternative in {@link cuteLangParser#expr4}.
 	 * @param ctx the parse tree
@@ -344,6 +356,16 @@ public interface cuteLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitPar(cuteLangParser.ParContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#funccall}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunccall(cuteLangParser.FunccallContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#funccall}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunccall(cuteLangParser.FunccallContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code singlebool0}
 	 * labeled alternative in {@link cuteLangParser#boolExpr0}.
@@ -510,6 +532,16 @@ public interface cuteLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFunction(cuteLangParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#fname}.
+	 * @param ctx the parse tree
+	 */
+	void enterFname(cuteLangParser.FnameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#fname}.
+	 * @param ctx the parse tree
+	 */
+	void exitFname(cuteLangParser.FnameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link cuteLangParser#fparam}.
 	 * @param ctx the parse tree

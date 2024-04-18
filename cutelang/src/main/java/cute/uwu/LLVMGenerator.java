@@ -1,5 +1,7 @@
 package cute.uwu;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 class LLVMGenerator {
@@ -14,15 +16,42 @@ class LLVMGenerator {
 
     static Stack<Integer> brstack = new Stack<Integer>();
 
-    static void functionstart(String id) {
+    static void func_call(String id, String ftype, List<Value> stackValues) { //done
+        String functionType = ftype.equals("int") ? "i32" : (ftype.equals("float") ? "double" : "i1");
+        buffer += "%" + reg + " = call " + functionType + " @" + id + "(";
+        for (int i = 0; i < stackValues.size(); i++) {
+            String type = stackValues.get(i).type.equals(VarType.INT) ? "i32" : (stackValues.get(i).type.equals(VarType.FLOAT) ? "double" : "i1");
+            String name = stackValues.get(i).name;
+            buffer += type + " " + name + ", ";
+        }
+        buffer = buffer.substring(0,buffer.length()-2);
+        buffer += ")\n";
+        reg++;
+    }
+
+    static void functionstart(String id, String ftype, String fargs) {
+        String type = ftype.equals("int") ? "i32" : (ftype.equals("float") ? "double" : "i1");
         main_text += buffer;
         main_reg = reg;
-        buffer = "define i32 @" + id + "() nounwind {\n";
+        buffer = "define " + type + " @" + id + "(" + fargs + ") nounwind {\n";
         reg = 1;
     }
 
-    static void functionend() {
-        buffer += "ret i32 %" + (reg - 1) + "\n";
+    static void functionend(String ftype, String retID) {
+        String type = ftype.equals("int") ? "i32" : (ftype.equals("float") ? "double" : "i1");
+
+        switch (ftype) {
+            case "int" -> {
+                load_i32(retID);
+            }
+            case "float" -> {
+                load_double(retID);
+            }
+            case "bool" -> {
+                load_bool(retID);
+            }
+        }
+        buffer += "ret " + type + " %" + (reg-1) + "\n";
         buffer += "}\n";
         header_text += buffer;
         buffer = "";
