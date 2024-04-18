@@ -3,6 +3,7 @@ package cute.uwu;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Stack;
 
 import cute.uwu.gen.*;
@@ -24,24 +25,56 @@ class Value {
 public class LLVMActions extends cuteLangBaseListener {
 
     HashMap<String, Value> variables = new HashMap<String, Value>();
+    HashMap<String, Value> localvariables = new HashMap<String, Value>();
+    HashSet<String> functions = new HashSet<String>();
     Stack<Value> stack = new Stack<Value>();
+    String function;
+    Boolean global;
 
     static int BUFFER_SIZE = 16;
 
     @Override
+    public void enterProgram(cuteLangParser.ProgramContext ctx) {
+        global = true;
+    }
+
+    @Override
+    public void exitFparam(cuteLangParser.FparamContext ctx) {
+        String ID = ctx.ID().getText();
+        functions.add(ID);
+        function = ID;
+        LLVMGenerator.functionstart(ID);
+    }
+
+    @Override
+    public void enterFblock(cuteLangParser.FblockContext ctx) {
+        global = false;
+    }
+
+    @Override
+    public void exitFblock(cuteLangParser.FblockContext ctx) {
+//        if( ! localvariables.containsKey(function) ){
+//            LLVMGenerator.assign(set_variable(function), "0");
+//        }
+//        LLVMGenerator.load( "%"+function );
+//        LLVMGenerator.functionend();
+//        localvariables = new HashMap<String, Value>();
+//        global = true;
+    }
+
+    @Override
     public void exitRepetitions(cuteLangParser.RepetitionsContext ctx) {
         var tmp = stack.pop();
-        if(tmp.type == VarType.INT) {
+        if (tmp.type == VarType.INT) {
             LLVMGenerator.repeatstart(tmp.name);
-        }
-        else {
-            System.err.println("Line "+ ctx.getStart().getLine()+", wrong type, should be int");
+        } else {
+            System.err.println("Line " + ctx.getStart().getLine() + ", wrong type, should be int");
         }
     }
 
     @Override
     public void exitBlock(cuteLangParser.BlockContext ctx) {
-        if( ctx.getParent() instanceof cuteLangParser.RepeatContext ){
+        if (ctx.getParent() instanceof cuteLangParser.RepeatContext) {
             LLVMGenerator.repeatend();
         }
     }
@@ -62,14 +95,19 @@ public class LLVMActions extends cuteLangBaseListener {
 
     @Override
     public void exitCond(cuteLangParser.CondContext ctx) {
-        String ID = ctx.ID().getText();
+        String prefix = global ? "@" : "%";
+        String ID = prefix + ctx.ID().getText();
         String INT = ctx.INT().getText();
 //        if( variables.contains(ID) ) {
-        if( variables.containsKey(ID) ) {
-            LLVMGenerator.icmp( ID, INT );
+        if (global) {
+
+        }
+
+        if (variables.containsKey(ID)) {
+            LLVMGenerator.icmp(ID, INT);
         } else {
             ctx.getStart().getLine();
-            System.err.println("Line "+ ctx.getStart().getLine()+", unknown variable: "+ID);
+            System.err.println("Line " + ctx.getStart().getLine() + ", unknown variable: " + ID);
         }
     }
 
@@ -78,65 +116,76 @@ public class LLVMActions extends cuteLangBaseListener {
 
         String ID = ctx.ID().getText();
         Value v = stack.pop();
+        String prefix = global ? "@" : "%";
 
-        if (!variables.containsKey(ID)) {
-            variables.put(ID, v);
+        if (!variables.containsKey(prefix + ID)) {
+            if (global) {
+                variables.put(prefix + ID, v);
+            } else {
+                localvariables.put(prefix + ID, v);
+            }
+
             if (v.type == VarType.INT) {
-                LLVMGenerator.declare_i32(ID);
+                LLVMGenerator.declare_i32(ID, global);
             }
             if (v.type == VarType.FLOAT) {
-                LLVMGenerator.declare_double(ID);
+                LLVMGenerator.declare_double(ID, global);
             }
             if (v.type == VarType.BOOL) {
-                LLVMGenerator.declare_bool(ID);
+                LLVMGenerator.declare_bool(ID, global);
             }
             if (v.type == VarType.STRING) {
-                LLVMGenerator.declare_string(ID);
+                LLVMGenerator.declare_string(ID, global);
             }
         }
 //        else {
 //            variables.get(ID).name = v.name;
 //        }
         if (v.type == VarType.INT) {
-            LLVMGenerator.assign_i32(ID, v.name);
+            LLVMGenerator.assign_i32(prefix + ID, v.name);
         }
         if (v.type == VarType.FLOAT) {
-            LLVMGenerator.assign_double(ID, v.name);
+            LLVMGenerator.assign_double(prefix + ID, v.name);
         }
         if (v.type == VarType.BOOL) {
-            LLVMGenerator.assign_bool(ID, v.name);
+            LLVMGenerator.assign_bool(prefix + ID, v.name);
         }
         if (v.type == VarType.STRING) {
-            LLVMGenerator.assign_string(ID);
+            LLVMGenerator.assign_string(prefix + ID);
         }
     }
 
     @Override
     public void exitProgram(cuteLangParser.ProgramContext ctx) {
+        LLVMGenerator.close_main();
         String output = LLVMGenerator.generate();
         System.out.println(output);
 
         try {
-            FileWriter writer = new FileWriter("C:\\Users\\KT\\kompilatory\\cutelang\\cuteLangFiles\\test.ll");
+            //FileWriter writer = new FileWriter("C:\\Users\\KT\\kompilatory\\cutelang\\cuteLangFiles\\test.ll");
+            FileWriter writer = new FileWriter("D:\\Studia\\sem8\\kompilatory\\projekt\\test.ll");
             writer.write(output);
             writer.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public void exitId1(cuteLangParser.Id1Context ctx) {
-        String ID = ctx.ID().getText();
+        String prefix = global ? "@" : "%";
+        String ID = prefix + ctx.ID().getText();
         if (variables.containsKey(ID)) {
             stack.push(variables.get(ID));
         } else {
-        error(ctx.getStart().getLine(), "unknown variable");
+            error(ctx.getStart().getLine(), "unknown variable");
         }
     }
 
     @Override
     public void exitId2(cuteLangParser.Id2Context ctx) {
-        String ID = ctx.ID().getText();
+        String prefix = global ? "@" : "%";
+        String ID = prefix + ctx.ID().getText();
         if (variables.containsKey(ID)) {
             stack.push(variables.get(ID));
         } else {
@@ -146,7 +195,8 @@ public class LLVMActions extends cuteLangBaseListener {
 
     @Override
     public void exitId3(cuteLangParser.Id3Context ctx) {
-        String ID = ctx.ID().getText();
+        String prefix = global ? "@" : "%";
+        String ID = prefix + ctx.ID().getText();
         if (variables.containsKey(ID)) {
             stack.push(variables.get(ID));
         } else {
@@ -180,7 +230,7 @@ public class LLVMActions extends cuteLangBaseListener {
         String tmp = ctx.STRING().getText();
         String content = tmp.substring(1, tmp.length() - 1);
         LLVMGenerator.constant_string(content);
-        String n = "ptrstr" + (LLVMGenerator.str - 1);
+        String n = "%ptrstr" + (LLVMGenerator.str - 1);
         stack.push(new Value(n, VarType.STRING, content.length()));
     }
 
@@ -199,7 +249,7 @@ public class LLVMActions extends cuteLangBaseListener {
             }
             if (v1.type == VarType.STRING) {
                 LLVMGenerator.add_string(v1.name, v1.length, v2.name, v2.length);
-                stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.STRING, v1.length+v2.length));
+                stack.push(new Value("%" + (LLVMGenerator.reg - 1), VarType.STRING, v1.length + v2.length));
             }
         } else {
             error(ctx.getStart().getLine(), "add type mismatch");
@@ -324,6 +374,8 @@ public class LLVMActions extends cuteLangBaseListener {
     @Override
     public void exitWrite(cuteLangParser.WriteContext ctx) {
         String ID = ctx.ID().getText();
+        String prefix = global ? "@" : "%";
+        ID = prefix + ID;
         if (variables.containsKey(ID)) {
             Value v = variables.get(ID);
             if (v.type != null) {

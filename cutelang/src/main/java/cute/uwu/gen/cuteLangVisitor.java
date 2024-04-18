@@ -16,6 +16,26 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProgram(cuteLangParser.ProgramContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBlock(cuteLangParser.BlockContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code repeat}
+	 * labeled alternative in {@link cuteLangParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRepeat(cuteLangParser.RepeatContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code if}
+	 * labeled alternative in {@link cuteLangParser#operation}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIf(cuteLangParser.IfContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code write}
 	 * labeled alternative in {@link cuteLangParser#operation}.
 	 * @param ctx the parse tree
@@ -36,6 +56,38 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitRead(cuteLangParser.ReadContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#repetitions}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRepetitions(cuteLangParser.RepetitionsContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code id3}
+	 * labeled alternative in {@link cuteLangParser#repvalue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitId3(cuteLangParser.Id3Context ctx);
+	/**
+	 * Visit a parse tree produced by the {@code int2}
+	 * labeled alternative in {@link cuteLangParser#repvalue}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInt2(cuteLangParser.Int2Context ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#ifblock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfblock(cuteLangParser.IfblockContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#cond}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCond(cuteLangParser.CondContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code single0}
 	 * labeled alternative in {@link cuteLangParser#expr0}.
@@ -246,4 +298,22 @@ public interface cuteLangVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitFloatarray(cuteLangParser.FloatarrayContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#function}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunction(cuteLangParser.FunctionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#fparam}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFparam(cuteLangParser.FparamContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link cuteLangParser#fblock}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFblock(cuteLangParser.FblockContext ctx);
 }

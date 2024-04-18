@@ -17,6 +17,40 @@ public interface cuteLangListener extends ParseTreeListener {
 	 */
 	void exitProgram(cuteLangParser.ProgramContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(cuteLangParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(cuteLangParser.BlockContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code repeat}
+	 * labeled alternative in {@link cuteLangParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterRepeat(cuteLangParser.RepeatContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code repeat}
+	 * labeled alternative in {@link cuteLangParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitRepeat(cuteLangParser.RepeatContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code if}
+	 * labeled alternative in {@link cuteLangParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void enterIf(cuteLangParser.IfContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code if}
+	 * labeled alternative in {@link cuteLangParser#operation}.
+	 * @param ctx the parse tree
+	 */
+	void exitIf(cuteLangParser.IfContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code write}
 	 * labeled alternative in {@link cuteLangParser#operation}.
 	 * @param ctx the parse tree
@@ -52,6 +86,60 @@ public interface cuteLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitRead(cuteLangParser.ReadContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#repetitions}.
+	 * @param ctx the parse tree
+	 */
+	void enterRepetitions(cuteLangParser.RepetitionsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#repetitions}.
+	 * @param ctx the parse tree
+	 */
+	void exitRepetitions(cuteLangParser.RepetitionsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code id3}
+	 * labeled alternative in {@link cuteLangParser#repvalue}.
+	 * @param ctx the parse tree
+	 */
+	void enterId3(cuteLangParser.Id3Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code id3}
+	 * labeled alternative in {@link cuteLangParser#repvalue}.
+	 * @param ctx the parse tree
+	 */
+	void exitId3(cuteLangParser.Id3Context ctx);
+	/**
+	 * Enter a parse tree produced by the {@code int2}
+	 * labeled alternative in {@link cuteLangParser#repvalue}.
+	 * @param ctx the parse tree
+	 */
+	void enterInt2(cuteLangParser.Int2Context ctx);
+	/**
+	 * Exit a parse tree produced by the {@code int2}
+	 * labeled alternative in {@link cuteLangParser#repvalue}.
+	 * @param ctx the parse tree
+	 */
+	void exitInt2(cuteLangParser.Int2Context ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#ifblock}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfblock(cuteLangParser.IfblockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#ifblock}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfblock(cuteLangParser.IfblockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#cond}.
+	 * @param ctx the parse tree
+	 */
+	void enterCond(cuteLangParser.CondContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#cond}.
+	 * @param ctx the parse tree
+	 */
+	void exitCond(cuteLangParser.CondContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code single0}
 	 * labeled alternative in {@link cuteLangParser#expr0}.
@@ -412,4 +500,34 @@ public interface cuteLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFloatarray(cuteLangParser.FloatarrayContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunction(cuteLangParser.FunctionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#function}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunction(cuteLangParser.FunctionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#fparam}.
+	 * @param ctx the parse tree
+	 */
+	void enterFparam(cuteLangParser.FparamContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#fparam}.
+	 * @param ctx the parse tree
+	 */
+	void exitFparam(cuteLangParser.FparamContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link cuteLangParser#fblock}.
+	 * @param ctx the parse tree
+	 */
+	void enterFblock(cuteLangParser.FblockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link cuteLangParser#fblock}.
+	 * @param ctx the parse tree
+	 */
+	void exitFblock(cuteLangParser.FblockContext ctx);
 }
