@@ -225,6 +225,7 @@ public class LLVMActions extends cuteLangBaseListener {
         LLVMGenerator.close_main();
         String output = LLVMGenerator.generate();
         System.out.println(output);
+//        var tmp = variables;
 
         try {
             //FileWriter writer = new FileWriter("C:\\Users\\KT\\kompilatory\\cutelang\\cuteLangFiles\\test.ll");
@@ -247,6 +248,26 @@ public class LLVMActions extends cuteLangBaseListener {
         } else {
             error(ctx.getStart().getLine(), "unknown variable");
         }
+//        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
+//            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
+//            switch (tmp.type) {
+//                case INT -> {
+//                    LLVMGenerator.load_i32(ID);
+//                }
+//                case FLOAT -> {
+//                    LLVMGenerator.load_double(ID);
+//                }
+//                case STRING -> {
+//                    LLVMGenerator.load_bool(ID);
+//                }
+//                case BOOL -> {
+//                    LLVMGenerator.load_string(ID);
+//                }
+//            }
+//            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+//        } else {
+//            error(ctx.getStart().getLine(), "unknown variable");
+//        }
     }
 
     @Override
@@ -260,6 +281,26 @@ public class LLVMActions extends cuteLangBaseListener {
         } else {
             error(ctx.getStart().getLine(), "unknown variable");
         }
+//        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
+//            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
+//            switch (tmp.type) {
+//                case INT -> {
+//                    LLVMGenerator.load_i32(ID);
+//                }
+//                case FLOAT -> {
+//                    LLVMGenerator.load_double(ID);
+//                }
+//                case STRING -> {
+//                    LLVMGenerator.load_bool(ID);
+//                }
+//                case BOOL -> {
+//                    LLVMGenerator.load_string(ID);
+//                }
+//            }
+//            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+//        } else {
+//            error(ctx.getStart().getLine(), "unknown variable");
+//        }
     }
 
     @Override
@@ -273,6 +314,26 @@ public class LLVMActions extends cuteLangBaseListener {
         } else {
             error(ctx.getStart().getLine(), "unknown variable");
         }
+//        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
+//            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
+//            switch (tmp.type) {
+//                case INT -> {
+//                    LLVMGenerator.load_i32(ID);
+//                }
+//                case FLOAT -> {
+//                    LLVMGenerator.load_double(ID);
+//                }
+//                case STRING -> {
+//                    LLVMGenerator.load_bool(ID);
+//                }
+//                case BOOL -> {
+//                    LLVMGenerator.load_string(ID);
+//                }
+//            }
+//            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+//        } else {
+//            error(ctx.getStart().getLine(), "unknown variable");
+//        }
     }
 
     @Override
