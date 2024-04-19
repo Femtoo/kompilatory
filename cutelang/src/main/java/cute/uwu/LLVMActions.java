@@ -28,6 +28,7 @@ public class LLVMActions extends cuteLangBaseListener {
     HashMap<String, Value> localvariables = new HashMap<String, Value>();
     HashMap<String,String> functions = new HashMap<String,String>();
     Stack<Value> stack = new Stack<Value>();
+    List<String> funcArgs = new ArrayList<>();
     String function;
     String functionType;
     Boolean global;
@@ -60,6 +61,7 @@ public class LLVMActions extends cuteLangBaseListener {
         if(functions.containsKey(ID)){
             error(ctx.getStart().getLine(), "function with such name already exists");
         } else {
+            funcArgs = new ArrayList<>();
             functions.put(ID, FTYPE);
             functionType = FTYPE;
             function = ID;
@@ -86,6 +88,7 @@ public class LLVMActions extends cuteLangBaseListener {
                     localvariables.put("%" + id, new Value("%" + id, VarType.BOOL, 0));
                 }
             }
+            funcArgs.add("%" + id);
             argsStr.append("%" + id + ", ");
         }
         argsStr.delete(argsStr.length()-2, argsStr.length());
@@ -241,99 +244,120 @@ public class LLVMActions extends cuteLangBaseListener {
     public void exitId1(cuteLangParser.Id1Context ctx) {
         String prefix = global ? "@" : "%";
         String ID = prefix + ctx.ID().getText();
-        if (variables.containsKey(ID)) {
-            stack.push(variables.get(ID));
-        } else if(localvariables.containsKey(ID)) {
-            stack.push(localvariables.get(ID));
-        } else {
-            error(ctx.getStart().getLine(), "unknown variable");
-        }
-//        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
-//            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
-//            switch (tmp.type) {
-//                case INT -> {
-//                    LLVMGenerator.load_i32(ID);
-//                }
-//                case FLOAT -> {
-//                    LLVMGenerator.load_double(ID);
-//                }
-//                case STRING -> {
-//                    LLVMGenerator.load_bool(ID);
-//                }
-//                case BOOL -> {
-//                    LLVMGenerator.load_string(ID);
-//                }
-//            }
+        if(localvariables.containsKey(ID) && funcArgs.contains(ID)) {
+//            var tmp = localvariables.get(ID);
+//            LLVMGenerator.load_func_arg(ID, tmp.type);
 //            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+            stack.push(localvariables.get(ID));
+            return;
+        }
+//        if (variables.containsKey(ID)) {
+//            stack.push(variables.get(ID));
+//        } else if(localvariables.containsKey(ID)) {
+//            stack.push(localvariables.get(ID));
 //        } else {
 //            error(ctx.getStart().getLine(), "unknown variable");
 //        }
+        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
+            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
+            switch (tmp.type) {
+                case INT -> {
+                    LLVMGenerator.load_i32(ID);
+                }
+                case FLOAT -> {
+                    LLVMGenerator.load_double(ID);
+                }
+                case STRING -> {
+                    LLVMGenerator.load_bool(ID);
+                }
+                case BOOL -> {
+                    LLVMGenerator.load_string(ID);
+                }
+            }
+            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+        } else {
+            error(ctx.getStart().getLine(), "unknown variable");
+        }
     }
 
     @Override
     public void exitId2(cuteLangParser.Id2Context ctx) {
         String prefix = global ? "@" : "%";
         String ID = prefix + ctx.ID().getText();
-        if (variables.containsKey(ID)) {
-            stack.push(variables.get(ID));
-        } else if(localvariables.containsKey(ID)) {
-            stack.push(localvariables.get(ID));
-        } else {
-            error(ctx.getStart().getLine(), "unknown variable");
-        }
-//        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
-//            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
-//            switch (tmp.type) {
-//                case INT -> {
-//                    LLVMGenerator.load_i32(ID);
-//                }
-//                case FLOAT -> {
-//                    LLVMGenerator.load_double(ID);
-//                }
-//                case STRING -> {
-//                    LLVMGenerator.load_bool(ID);
-//                }
-//                case BOOL -> {
-//                    LLVMGenerator.load_string(ID);
-//                }
-//            }
+        if(localvariables.containsKey(ID) && funcArgs.contains(ID)) {
+//            var tmp = localvariables.get(ID);
+//            LLVMGenerator.load_func_arg(ID, tmp.type);
 //            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+            stack.push(localvariables.get(ID));
+            return;
+        }
+//        if (variables.containsKey(ID)) {
+//            stack.push(variables.get(ID));
+//        } else if(localvariables.containsKey(ID)) {
+//            stack.push(localvariables.get(ID));
 //        } else {
 //            error(ctx.getStart().getLine(), "unknown variable");
 //        }
+        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
+            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
+            switch (tmp.type) {
+                case INT -> {
+                    LLVMGenerator.load_i32(ID);
+                }
+                case FLOAT -> {
+                    LLVMGenerator.load_double(ID);
+                }
+                case STRING -> {
+                    LLVMGenerator.load_bool(ID);
+                }
+                case BOOL -> {
+                    LLVMGenerator.load_string(ID);
+                }
+            }
+            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+        } else {
+            error(ctx.getStart().getLine(), "unknown variable");
+        }
     }
 
     @Override
     public void exitId3(cuteLangParser.Id3Context ctx) {
         String prefix = global ? "@" : "%";
         String ID = prefix + ctx.ID().getText();
-        if (variables.containsKey(ID)) {
-            stack.push(variables.get(ID));
-        } else if(localvariables.containsKey(ID)) {
-            stack.push(localvariables.get(ID));
-        } else {
-            error(ctx.getStart().getLine(), "unknown variable");
-        }
-//        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
-//            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
-//            switch (tmp.type) {
-//                case INT -> {
-//                    LLVMGenerator.load_i32(ID);
-//                }
-//                case FLOAT -> {
-//                    LLVMGenerator.load_double(ID);
-//                }
-//                case STRING -> {
-//                    LLVMGenerator.load_bool(ID);
-//                }
-//                case BOOL -> {
-//                    LLVMGenerator.load_string(ID);
-//                }
-//            }
+        if(localvariables.containsKey(ID) && funcArgs.contains(ID)) {
+//            var tmp = localvariables.get(ID);
+//            LLVMGenerator.load_func_arg(ID, tmp.type);
 //            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+            stack.push(localvariables.get(ID));
+            return;
+        }
+//        if (variables.containsKey(ID)) {
+//            stack.push(variables.get(ID));
+//        } else if(localvariables.containsKey(ID)) {
+//            stack.push(localvariables.get(ID));
 //        } else {
 //            error(ctx.getStart().getLine(), "unknown variable");
 //        }
+        if (variables.containsKey(ID) || localvariables.containsKey(ID)){
+            var tmp = localvariables.containsKey(ID) ? localvariables.get(ID) : variables.get(ID);
+            switch (tmp.type) {
+                case INT -> {
+                    LLVMGenerator.load_i32(ID);
+                }
+                case FLOAT -> {
+                    LLVMGenerator.load_double(ID);
+                }
+                case STRING -> {
+                    LLVMGenerator.load_bool(ID);
+                }
+                case BOOL -> {
+                    LLVMGenerator.load_string(ID);
+                }
+            }
+            stack.push(new Value("%" + (LLVMGenerator.reg - 1), tmp.type, tmp.length));
+        } else {
+            error(ctx.getStart().getLine(), "unknown variable");
+        }
     }
 
     @Override

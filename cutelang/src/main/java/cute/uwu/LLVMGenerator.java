@@ -192,6 +192,23 @@ class LLVMGenerator {
         buffer += "store i1 " + value + ", i1* " + id + "\n";
     }
 
+    static void load_func_arg(String id, VarType type) {
+        switch (type) {
+            case INT -> {
+                buffer += "%" + reg + " = load i32, i32 " + id + "\n";
+                reg++;
+            }
+            case FLOAT -> {
+                buffer += "%" + reg + " = load double, double " + id + "\n";
+                reg++;
+            }
+            case BOOL -> {
+                buffer += "%" + reg + " = load i1, i1 " + id + "\n";
+                reg++;
+            }
+        }
+    }
+
     static void load_i32(String id) {
         buffer += "%" + reg + " = load i32, i32* " + id + "\n";
         reg++;

@@ -1,15 +1,29 @@
 :D
-function int func(int a, int b):
-bb = a + b
-return bb
+function int mult(int a, int b):
+result = a * b
+return result
 endfunction
 
+str = "here comes five"
+strsec = "functions:"
 c = 0
-a = 5
-b = a + 3
-c = c + 2
-repeat 3
-write c
-c = func(a,1)
+repeat 10
+    if c == 5 then
+        write str
+    endif
+    write c
+    c = c + 1
 endrepeat
+
+write strsec
+c = 0
+repeat 5
+    multi = mult(2,c)
+    write multi
+    c = c + 1
+    multi = "lol"
+    write multi
+endrepeat
+c = "to koniec"
+write c
 :C
